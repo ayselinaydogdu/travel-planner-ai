@@ -91,7 +91,7 @@ button:hover{
 
     width: 100%;
 
-    padding: 20px 80px;
+    padding: 20px 20px;
 
     background: rgba(15,23,42,.75);
     backdrop-filter: blur(12px);
@@ -166,7 +166,8 @@ button:hover{
 
 .search-card{
 
-    width:900px;
+    width:100%;
+    max-width:900px;
 
     margin-top:40px;
 
@@ -1008,4 +1009,72 @@ color:#dbeafe;
 
 .nav-links li {
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 14px 16px;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+  .nav-links {
+    gap: 14px;
+    font-size: 13px;
+  }
+
+  .hero {
+    margin-top: 90px;
+  }
+
+  .hero-title {
+    font-size: 34px;
+    flex-wrap: wrap;
+  }
+
+  .hero-subtitle {
+    font-size: 18px;
+  }
+
+  p {
+    font-size: 16px;
+    padding: 0 10px;
+  }
+
+  .search-card {
+    grid-template-columns: 1fr;
+    padding: 24px;
+  }
+
+  .generate-btn {
+    grid-column: 1;
+  }
+
+  .destinations-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .about-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .destination-content {
+    grid-template-columns: 1fr;
+  }
+
+  .trip-info {
+    grid-template-columns: 1fr;
+  }
+
+  .weather-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .destinations-grid {
+    grid-template-columns: 1fr;
+  }
 }
