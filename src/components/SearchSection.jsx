@@ -12,8 +12,8 @@ const [from, setFrom] = useState("");
 const [to, setTo] = useState("");
 const [days, setDays] = useState("");
 const [budget, setBudget] = useState("");
-const [travelStyle, setTravelStyle] = useState("Budget");
-const [interest, setInterest] = useState("Food");
+const [travelStyle, setTravelStyle] = useState(["General"]);
+const [interest, setInterest] = useState(["General"]);
 const [trip, setTrip] = useState(null);
 const [weather, setWeather] = useState(null);
 const [loading, setLoading] = useState(false);
@@ -29,7 +29,14 @@ setLoading(true);
 setWeather(null);
 
 try {
-const tripData = { from, to, days, budget, travelStyle, interest };
+const tripData = {
+from,
+to,
+days,
+budget,
+travelStyle: travelStyle.length ? travelStyle : ["General"],
+interest: interest.length ? interest : ["General"],
+      };
 
 try {
 const location = await getCoordinates(to);

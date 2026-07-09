@@ -1,3 +1,10 @@
+function formatList(list) {
+  if (!list || list.length === 0 || list.includes("General")) {
+    return null;
+  }
+  return list.join(", ");
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -6,22 +13,30 @@ export default async function handler(req, res) {
   const { trip } = req.body;
   const API_KEY = process.env.GROQ_API_KEY;
 
+  const styleText = formatList(trip.travelStyle);
+  const interestText = formatList(trip.interest);
+
+  const styleInstruction = styleText
+    ? `Travel Style(s): ${styleText}. The itinerary must clearly reflect ALL of these styles together in the choice of accommodation, dining, and activities.`
+    : `Travel Style: General — no specific style was requested, so create a well-balanced, broadly appealing itinerary suitable for an average traveler.`;
+
+  const interestInstruction = interestText
+    ? `Main Interest(s): ${interestText}. At least 60% of the activities each day should relate to these interests, distributing attention across all of them (don't let one completely dominate).`
+    : `Main Interest: General — no specific interest was requested, so include a diverse mix of popular activities (sightseeing, food, culture, nature) to give a well-rounded experience.`;
+
   const prompt = `
 You are an expert travel planner who is very careful with budgets.
 Create a ${trip.days}-day travel itinerary.
 Destination: ${trip.to}
 Departure City: ${trip.from}
 Total Budget: €${trip.budget} — this is a target budget for the ENTIRE trip (accommodation + food + activities + local transportation, for all ${trip.days} days combined).
-Travel Style: ${trip.travelStyle}
-Main Interest: ${trip.interest}
+${styleInstruction}
+${interestInstruction}
 STRICT BUDGET RULES:
 - The Grand Total should be realistic and land close to €${trip.budget} — use at least 85% of the budget. Do not leave a large unused margin; if there is room, upgrade accommodation quality, add more activities, or include nicer dining instead of leaving money unspent.
 - The Grand Total must NOT exceed €${trip.budget}.
-- Divide a reasonable share of the budget across ${trip.days} nights for accommodation, matching the "${trip.travelStyle}" style.
+- Divide a reasonable share of the budget across ${trip.days} nights for accommodation.
 STYLE AND INTEREST RULES:
-- The itinerary must clearly reflect the "${trip.travelStyle}" travel style in the choice of accommodation, dining, and activities (e.g. "Family" style should include family-friendly venues, activities suitable for children, and family-sized dining options; "Luxury" should feel upscale; "Adventure" should include active/outdoor experiences; "Budget" should prioritize free/cheap options).
-- At least 60% of the activities each day should relate to the interest: "${trip.interest}".
-- Both the Travel Style and the Interest should be visibly reflected together — don't let one completely override the other.
 - Generate a DIFFERENT set of activities for EACH day — do not repeat activities across days.
 For each day, include:
 Morning
