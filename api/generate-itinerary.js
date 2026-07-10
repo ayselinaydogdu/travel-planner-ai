@@ -5,6 +5,14 @@ function formatList(list) {
   return list.join(", ");
 }
 
+const LANGUAGE_NAMES = {
+  en: "English",
+  tr: "Turkish",
+  es: "Spanish",
+  fr: "French",
+  de: "German",
+};
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -15,6 +23,7 @@ export default async function handler(req, res) {
 
   const styleText = formatList(trip.travelStyle);
   const interestText = formatList(trip.interest);
+  const languageName = LANGUAGE_NAMES[trip.language] || "English";
 
   const styleInstruction = styleText
     ? `Travel Style(s): ${styleText}. The itinerary must clearly reflect ALL of these styles together in the choice of accommodation, dining, and activities.`
@@ -51,7 +60,8 @@ At the very end, add a section titled "Cost Breakdown" with:
 - Grand Total (must be ≤ €${trip.budget} and close to it)
 If the Grand Total is too far below or above €${trip.budget}, revise your choices before answering.
 IMPORTANT: The Grand Total must be the actual sum of Accommodation + Food + Activities + Transportation — do not add any extra unexplained amount to force the total closer to the budget. If the sum is far below the budget, go back and genuinely add more activities, better dining, or nicer accommodation into the daily plan itself (Day 1, Day 2, etc.) so that the itemized costs already reflect the full budget. Never write things like "+ €X (adjustment)" in the Grand Total. The Grand Total must be a single plain number, e.g. "Grand Total: €950".
-Format clearly with "Day 1", "Day 2", etc. as headers. Return only the itinerary and cost breakdown, no introduction or closing remarks.
+LANGUAGE: Write the ENTIRE response in ${languageName}, including all headers like "Day 1", "Morning", "Afternoon", "Evening", "Cost Breakdown", and all activity descriptions. Only keep the numeric costs in the format "€X". Do not mix languages.
+Format clearly with "Day 1", "Day 2", etc. (translated into ${languageName}) as headers. Return only the itinerary and cost breakdown, no introduction or closing remarks.
 `;
 
   try {

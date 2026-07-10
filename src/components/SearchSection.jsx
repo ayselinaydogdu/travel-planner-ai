@@ -6,8 +6,10 @@ import WeatherCard from "./WeatherCard";
 import AIPlanDisplay from "./AIPlanDisplay";
 import { getCoordinates, getWeather } from "../services/weatherService";
 import { generateItinerary } from "../services/groqService";
+import { useLanguage } from "../context/LanguageContext";
 
 function SearchSection() {
+const { t, language } = useLanguage();
 const [from, setFrom] = useState("");
 const [to, setTo] = useState("");
 const [days, setDays] = useState("");
@@ -21,7 +23,7 @@ const [aiPlan, setAiPlan] = useState("");
 
 async function generateTrip() {
 if (!from || !to || !days || !budget) {
-alert("Please fill in all fields!");
+alert(t.form.fillFields);
 return;
     }
 
@@ -36,6 +38,7 @@ days,
 budget,
 travelStyle: travelStyle.length ? travelStyle : ["General"],
 interest: interest.length ? interest : ["General"],
+language,
       };
 
 try {
@@ -53,7 +56,7 @@ setAiPlan(aiResponse);
 setTrip(tripData);
     } catch (error) {
 console.error("HATA:", error.message);
-alert("Something went wrong: " + error.message);
+alert(t.form.somethingWrong + error.message);
     }
 
 setLoading(false);
@@ -61,11 +64,8 @@ setLoading(false);
 
 return (
 <section className="search-section" id="planner">
-<h2>Plan Your Journey</h2>
-<p>
-        Let AI build the perfect itinerary based on your destination,
-        budget and travel style.
-</p>
+<h2>{t.form.title}</h2>
+<p>{t.form.subtitle}</p>
 <SearchForm
 from={from} setFrom={setFrom}
 to={to} setTo={setTo}
@@ -79,7 +79,7 @@ setTrip={setTrip}
 />
 {loading && (
 <div className="loading-box">
-          🤖 AI is creating your perfect itinerary...
+{t.form.loading}
 </div>
       )}
 {trip && !loading && (

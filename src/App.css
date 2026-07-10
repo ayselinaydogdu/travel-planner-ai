@@ -1123,3 +1123,47 @@ color:#dbeafe;
     font-size: 13px;
   }
 }
+
+.lang-switcher {
+  display: flex;
+  gap: 6px;
+}
+
+.lang-flag {
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 4px 6px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: .2s;
+  line-height: 1;
+}
+
+.lang-flag:hover {
+  background: rgba(255,255,255,.08);
+}
+
+.lang-flag-active {
+  border-color: #3b82f6;
+  background: rgba(59,130,246,.15);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .lang-flag {
+    font-size: 16px;
+    padding: 3px 4px;
+  }
+}

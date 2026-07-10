@@ -1,33 +1,14 @@
+import { useLanguage } from "../context/LanguageContext";
+
 const TRAVEL_STYLES = [
-  "General",
-  "Budget",
-  "Luxury",
-  "Adventure",
-  "Family",
-  "Romantic",
-  "Solo",
-  "Business",
-  "Relaxation",
-  "Backpacking",
-  "Road Trip",
+  "General", "Budget", "Luxury", "Adventure", "Family",
+  "Romantic", "Solo", "Business", "Relaxation", "Backpacking", "Road Trip",
 ];
 
 const INTERESTS = [
-  "General",
-  "Food",
-  "Museums",
-  "Nature",
-  "Nightlife",
-  "Shopping",
-  "History",
-  "Art",
-  "Sports",
-  "Photography",
-  "Beaches",
-  "Local Culture",
-  "Architecture",
-  "Wellness & Spa",
-  "Festivals & Events",
+  "General", "Food", "Museums", "Nature", "Nightlife", "Shopping",
+  "History", "Art", "Sports", "Photography", "Beaches",
+  "Local Culture", "Architecture", "Wellness & Spa", "Festivals & Events",
 ];
 
 function SearchForm({
@@ -47,6 +28,7 @@ loading,
 generateTrip,
 setTrip,
 }) {
+  const { t } = useLanguage();
 
 function toggleValue(value, current, setter) {
 setTrip(null);
@@ -65,7 +47,7 @@ setter([...withoutGeneral, value]);
 return (
 <div className="search-card">
 <div className="input-group">
-<label>From</label>
+<label>{t.form.from}</label>
 <input
 type="text"
 placeholder="Istanbul"
@@ -77,7 +59,7 @@ setTrip(null);
 />
 </div>
 <div className="input-group">
-<label>To</label>
+<label>{t.form.to}</label>
 <input
 type="text"
 placeholder="Paris"
@@ -89,7 +71,7 @@ setTrip(null);
 />
 </div>
 <div className="input-group">
-<label>Days</label>
+<label>{t.form.days}</label>
 <input
 type="number"
 min="1"
@@ -103,7 +85,7 @@ setTrip(null);
 />
 </div>
 <div className="input-group">
-<label>Budget (€)</label>
+<label>{t.form.budget}</label>
 <input
 type="number"
 min="100"
@@ -117,7 +99,7 @@ setTrip(null);
 </div>
 
 <div className="input-group chip-group">
-<label>Travel Style</label>
+<label>{t.form.travelStyle}</label>
 <div className="chip-container">
 {TRAVEL_STYLES.map((style) => (
 <button
@@ -126,14 +108,14 @@ key={style}
 className={`chip ${travelStyle.includes(style) ? "chip-selected" : ""}`}
 onClick={() => toggleValue(style, travelStyle, setTravelStyle)}
 >
-{style}
+{t.styles[style]}
 </button>
             ))}
 </div>
 </div>
 
 <div className="input-group chip-group">
-<label>Interest</label>
+<label>{t.form.interest}</label>
 <div className="chip-container">
 {INTERESTS.map((item) => (
 <button
@@ -142,7 +124,7 @@ key={item}
 className={`chip ${interest.includes(item) ? "chip-selected" : ""}`}
 onClick={() => toggleValue(item, interest, setInterest)}
 >
-{item}
+{t.interests[item]}
 </button>
             ))}
 </div>
@@ -153,7 +135,7 @@ className="generate-btn"
 onClick={generateTrip}
 disabled={loading}
 >
-{loading ? "Generating..." : "Generate Trip"}
+{loading ? t.form.generating : t.form.generate}
 </button>
 </div>
   );
