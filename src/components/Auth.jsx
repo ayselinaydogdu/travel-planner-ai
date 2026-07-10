@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
-export default function Auth() {
+export default function Auth({ onSuccess }) {
   const { signIn, signUp } = useAuth();
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState("");
@@ -20,6 +20,8 @@ export default function Auth() {
 
     if (error) {
       setError(error.message);
+    } else {
+      onSuccess?.();
     }
     setLoading(false);
   };
