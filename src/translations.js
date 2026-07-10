@@ -57,6 +57,7 @@ const translations = {
     pdf: {
       download: "📄 Download as PDF",
     },
+    planLabels: { day: "Day", morning: "Morning", afternoon: "Afternoon", evening: "Evening", costBreakdown: "Cost Breakdown", grandTotal: "Grand Total" },
   },
 
   tr: {
@@ -117,6 +118,7 @@ const translations = {
     pdf: {
       download: "📄 PDF Olarak İndir",
     },
+    planLabels: { day: "Gün", morning: "Sabah", afternoon: "Öğleden Sonra", evening: "Akşam", costBreakdown: "Maliyet Dağılımı", grandTotal: "Genel Toplam" },
   },
 
   es: {
@@ -177,6 +179,7 @@ const translations = {
     pdf: {
       download: "📄 Descargar como PDF",
     },
+    planLabels: { day: "Día", morning: "Mañana", afternoon: "Tarde", evening: "Noche", costBreakdown: "Desglose de Costos", grandTotal: "Total General" },
   },
 
   fr: {
@@ -237,6 +240,7 @@ const translations = {
     pdf: {
       download: "📄 Télécharger en PDF",
     },
+    planLabels: { day: "Jour", morning: "Matin", afternoon: "Après-midi", evening: "Soir", costBreakdown: "Répartition des Coûts", grandTotal: "Total Général" },
   },
 
   de: {
@@ -297,6 +301,7 @@ const translations = {
     pdf: {
       download: "📄 Als PDF Herunterladen",
     },
+    planLabels: { day: "Tag", morning: "Morgen", afternoon: "Nachmittag", evening: "Abend", costBreakdown: "Kostenaufschlüsselung", grandTotal: "Gesamtsumme" },
   },
 };
 

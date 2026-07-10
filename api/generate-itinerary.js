@@ -60,8 +60,8 @@ At the very end, add a section titled "Cost Breakdown" with:
 - Grand Total (must be ≤ €${trip.budget} and close to it)
 If the Grand Total is too far below or above €${trip.budget}, revise your choices before answering.
 IMPORTANT: The Grand Total must be the actual sum of Accommodation + Food + Activities + Transportation — do not add any extra unexplained amount to force the total closer to the budget. If the sum is far below the budget, go back and genuinely add more activities, better dining, or nicer accommodation into the daily plan itself (Day 1, Day 2, etc.) so that the itemized costs already reflect the full budget. Never write things like "+ €X (adjustment)" in the Grand Total. The Grand Total must be a single plain number, e.g. "Grand Total: €950".
-LANGUAGE: Write the ENTIRE response in ${languageName}, including all headers like "Day 1", "Morning", "Afternoon", "Evening", "Cost Breakdown", and all activity descriptions. Only keep the numeric costs in the format "€X". Do not mix languages.
-Format clearly with "Day 1", "Day 2", etc. (translated into ${languageName}) as headers. Return only the itinerary and cost breakdown, no introduction or closing remarks.
+LANGUAGE: Write all activity descriptions and content in ${languageName}. HOWEVER, keep the structural headers exactly in English and exactly in this format, do not translate them: "## Day 1", "## Day 2", etc., "Morning", "Afternoon", "Evening", and "## Cost Breakdown". These structural headers must ALWAYS stay in English regardless of the chosen language, since they are used for parsing. Only the activity descriptions, accommodation/food/activity labels inside the Cost Breakdown, and all other text should be in ${languageName}.
+Format clearly with "## Day 1", "## Day 2", etc. as headers (always in English). Return only the itinerary and cost breakdown, no introduction or closing remarks.
 `;
 
   try {
