@@ -13,7 +13,7 @@ return parts.map((part, i) =>
   );
 }
 function parsePeriods(dayContent) {
-const regex = /^[\s*#-]*(Morning|Afternoon|Evening)\*{0,2}:?\s*$/gim;
+const regex = /\*{0,2}(Morning|Afternoon|Evening)\*{0,2}:?/gi;
 const matches = [...dayContent.matchAll(regex)];
 if (matches.length === 0) {
 return [{ label: null, items: splitItems(dayContent) }];
