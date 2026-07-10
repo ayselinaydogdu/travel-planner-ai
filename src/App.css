@@ -185,7 +185,9 @@ button:hover{
     margin-top:40px;
 
     background:var(--glass-bg-strong);
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
+    
     border: 1px solid var(--glass-border);
 
     padding:40px;
@@ -283,6 +285,7 @@ button:hover{
     padding:28px;
 
     background:var(--glass-bg);
+    -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
 
     border:1px solid var(--glass-border);
@@ -315,8 +318,7 @@ button:hover{
 
 .info-card{
 
-    background:var(--glass-bg);
-    backdrop-filter: blur(12px);
+    background: rgba(30, 27, 46, 0.55);
     border:1px solid var(--glass-border);
 
     padding:18px;
@@ -367,6 +369,7 @@ button:hover{
   padding: 18px;
   border-radius: 16px;
   background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
   color: var(--accent-text);
@@ -417,6 +420,7 @@ button:hover{
 .day-card{
 
     background:var(--glass-bg);
+    -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
 
     border:1px solid var(--glass-border);
@@ -565,6 +569,7 @@ button:hover{
   padding: 30px;
   border-radius: 20px;
   background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
   border: 1px solid var(--glass-border);
 }
@@ -612,7 +617,9 @@ padding:30px;
 border-radius:20px;
 
 background:var(--glass-bg-strong);
+-webkit-backdrop-filter: blur(18px);
 backdrop-filter: blur(18px);
+
 
 border:1px solid var(--glass-border);
 
@@ -741,6 +748,7 @@ line-height:1.6;
 margin-top:40px;
 
 background:var(--glass-bg-strong);
+-webkit-backdrop-filter: blur(20px);
 backdrop-filter: blur(20px);
 border:1px solid var(--glass-border);
 
@@ -797,6 +805,7 @@ color:#dbeafe;
 .cost-breakdown-card {
   margin-top: 30px;
   background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
   border: 1px solid var(--glass-border);
   border-radius: 20px;
@@ -988,6 +997,7 @@ color:#dbeafe;
 
 .about-card {
   background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   border: 1px solid var(--glass-border);
   border-radius: 18px;
@@ -1182,6 +1192,7 @@ color:#dbeafe;
 .booking-links-card {
   margin-top: 30px;
   background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
   border: 1px solid var(--glass-border);
   border-radius: 20px;
