@@ -10,98 +10,99 @@ import { useLanguage } from "../context/LanguageContext";
 import { downloadTripPDF } from "../utils/pdfExport";
 
 function SearchSection() {
-const { t, language } = useLanguage();
-const [from, setFrom] = useState("");
-const [to, setTo] = useState("");
-const [days, setDays] = useState("");
-const [budget, setBudget] = useState("");
-const [travelStyle, setTravelStyle] = useState(["General"]);
-const [interest, setInterest] = useState(["General"]);
-const [trip, setTrip] = useState(null);
-const [weather, setWeather] = useState(null);
-const [loading, setLoading] = useState(false);
-const [aiPlan, setAiPlan] = useState("");
+  const { t, language } = useLanguage();
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [days, setDays] = useState("");
+  const [budget, setBudget] = useState("");
+  const [travelStyle, setTravelStyle] = useState(["General"]);
+  const [interest, setInterest] = useState(["General"]);
+  const [trip, setTrip] = useState(null);
+  const [weather, setWeather] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [aiPlan, setAiPlan] = useState(null);
 
-async function generateTrip() {
-if (!from || !to || !days || !budget) {
-alert(t.form.fillFields);
-return;
+  async function generateTrip() {
+    if (!from || !to || !days || !budget) {
+      alert(t.form.fillFields);
+      return;
     }
-
-setLoading(true);
-setWeather(null);
-
-try {
-const tripData = {
-from,
-to,
-days,
-budget,
-travelStyle: travelStyle.length ? travelStyle : ["General"],
-interest: interest.length ? interest : ["General"],
-language,
+    setLoading(true);
+    setWeather(null);
+    try {
+      const tripData = {
+        from,
+        to,
+        days,
+        budget,
+        travelStyle: travelStyle.length ? travelStyle : ["General"],
+        interest: interest.length ? interest : ["General"],
+        language,
       };
-
-try {
-const location = await getCoordinates(to);
-if (location) {
-const currentWeather = await getWeather(location.latitude, location.longitude);
-setWeather(currentWeather);
+      try {
+        const location = await getCoordinates(to);
+        if (location) {
+          const currentWeather = await getWeather(location.latitude, location.longitude);
+          setWeather(currentWeather);
         }
       } catch (weatherError) {
-console.error("Hava durumu alınamadı:", weatherError.message);
+        console.error("Hava durumu alınamadı:", weatherError.message);
       }
-
-const aiResponse = await generateItinerary(tripData);
-setAiPlan(aiResponse);
-setTrip(tripData);
+      const aiResponse = await generateItinerary(tripData);
+      setAiPlan(aiResponse);
+      setTrip(tripData);
     } catch (error) {
-console.error("HATA:", error.message);
-alert(t.form.somethingWrong + error.message);
+      console.error("HATA:", error.message);
+      alert(t.form.somethingWrong + error.message);
     }
-
-setLoading(false);
+    setLoading(false);
   }
 
-function handleDownloadPDF() {
-downloadTripPDF(trip, aiPlan);
+  function handleDownloadPDF() {
+    downloadTripPDF(trip, aiPlan, {
+      ...t.planLabels,
+      tripTo: t.pdf.tripTo,
+      from: t.pdf.from,
+      days: t.pdf.days,
+      budget: t.pdf.budget,
+    });
   }
 
-return (
-<section className="search-section" id="planner">
-<h2>{t.form.title}</h2>
-<p>{t.form.subtitle}</p>
-<SearchForm
-from={from} setFrom={setFrom}
-to={to} setTo={setTo}
-days={days} setDays={setDays}
-budget={budget} setBudget={setBudget}
-travelStyle={travelStyle} setTravelStyle={setTravelStyle}
-interest={interest} setInterest={setInterest}
-loading={loading}
-generateTrip={generateTrip}
-setTrip={setTrip}
-/>
-{loading && (
-<div className="loading-box">
-{t.form.loading}
-</div>
+  return (
+    <section className="search-section" id="planner">
+      <h2>{t.form.title}</h2>
+      <p>{t.form.subtitle}</p>
+      <SearchForm
+        from={from} setFrom={setFrom}
+        to={to} setTo={setTo}
+        days={days} setDays={setDays}
+        budget={budget} setBudget={setBudget}
+        travelStyle={travelStyle} setTravelStyle={setTravelStyle}
+        interest={interest} setInterest={setInterest}
+        loading={loading}
+        generateTrip={generateTrip}
+        setTrip={setTrip}
+      />
+      {loading && (
+        <div className="loading-box">
+          {t.form.loading}
+        </div>
       )}
-{trip && !loading && (
-<>
-<TripSummary trip={trip} />
-{weather && <WeatherCard weather={weather} />}
-<DestinationCard trip={trip} />
-<div className="ai-result">
-<h2>🤖 AI Personalized Travel Plan</h2>
-<AIPlanDisplay plan={aiPlan} destination={trip.to} />
-<button className="pdf-download-btn" onClick={handleDownloadPDF}>
-{t.pdf.download}
-</button>
-</div>
-</>
+      {trip && !loading && (
+        <>
+          <TripSummary trip={trip} />
+          {weather && <WeatherCard weather={weather} />}
+          <DestinationCard trip={trip} />
+          <div className="ai-result">
+            <h2>🤖 AI Personalized Travel Plan</h2>
+            <AIPlanDisplay plan={aiPlan} destination={trip.to} />
+            <button className="pdf-download-btn" onClick={handleDownloadPDF}>
+              {t.pdf.download}
+            </button>
+          </div>
+        </>
       )}
-</section>
+    </section>
   );
 }
 

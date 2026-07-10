@@ -11,7 +11,7 @@ export async function generateItinerary(trip) {
     throw new Error(data?.error || "Bir hata oluştu");
   }
 
-  return data.content;
+  return data.plan;
 }
 
 export async function getDestinationInfo(city) {

@@ -117,6 +117,10 @@ const translations = {
     },
     pdf: {
       download: "📄 PDF Olarak İndir",
+      tripTo: "Gezi:",
+      from: "Nereden",
+      days: "Gün",
+      budget: "Bütçe",
     },
     planLabels: { day: "Gün", morning: "Sabah", afternoon: "Öğleden Sonra", evening: "Akşam", costBreakdown: "Maliyet Dağılımı", grandTotal: "Genel Toplam" },
   },
@@ -178,6 +182,10 @@ const translations = {
     },
     pdf: {
       download: "📄 Descargar como PDF",
+      tripTo: "Viaje a",
+      from: "Desde",
+      days: "Días",
+      budget: "Presupuesto",
     },
     planLabels: { day: "Día", morning: "Mañana", afternoon: "Tarde", evening: "Noche", costBreakdown: "Desglose de Costos", grandTotal: "Total General" },
   },
@@ -239,6 +247,10 @@ const translations = {
     },
     pdf: {
       download: "📄 Télécharger en PDF",
+      tripTo: "Voyage à",
+      from: "De",
+      days: "Jours",
+      budget: "Budget",
     },
     planLabels: { day: "Jour", morning: "Matin", afternoon: "Après-midi", evening: "Soir", costBreakdown: "Répartition des Coûts", grandTotal: "Total Général" },
   },
@@ -300,6 +312,10 @@ const translations = {
     },
     pdf: {
       download: "📄 Als PDF Herunterladen",
+      tripTo: "Reise zu",
+      from: "Von",
+      days: "Tage",
+      budget: "Budget",
     },
     planLabels: { day: "Tag", morning: "Morgen", afternoon: "Nachmittag", evening: "Abend", costBreakdown: "Kostenaufschlüsselung", grandTotal: "Gesamtsumme" },
   },

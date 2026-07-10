@@ -13,12 +13,40 @@ const LANGUAGE_NAMES = {
   de: "German",
 };
 
-// CJK (Çince/Japonca/Korece) karakter var mı diye kontrol eder.
+// CJK (Çince/Japonca/Korece) ve Arapça karakter var mı diye kontrol eder.
 // Bu karakterler hiçbir desteklenen dilde (en/tr/es/fr/de) normalde bulunmaz,
 // bu yüzden görülürse dil karışması olduğunu gösterir.
 function hasUnexpectedCharacters(text) {
-  const cjkRegex = /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/;
-  return cjkRegex.test(text);
+  const leakRegex = /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF\u0600-\u06FF]/;
+  return leakRegex.test(text);
+}
+
+// JSON'daki tüm string değerleri tek bir metinde birleştirir, böylece dil
+// sızıntısı kontrolünü tüm plan üzerinde tek seferde yapabiliriz.
+function collectStrings(value, acc = []) {
+  if (typeof value === "string") {
+    acc.push(value);
+  } else if (Array.isArray(value)) {
+    value.forEach((item) => collectStrings(item, acc));
+  } else if (value && typeof value === "object") {
+    Object.values(value).forEach((item) => collectStrings(item, acc));
+  }
+  return acc;
+}
+
+function isValidPlan(plan) {
+  if (!plan || !Array.isArray(plan.days) || plan.days.length === 0) return false;
+  const hasValidDays = plan.days.every(
+    (d) =>
+      typeof d.number !== "undefined" &&
+      Array.isArray(d.morning) &&
+      Array.isArray(d.afternoon) &&
+      Array.isArray(d.evening)
+  );
+  if (!hasValidDays) return false;
+  if (!plan.costBreakdown || !Array.isArray(plan.costBreakdown.rows)) return false;
+  if (!plan.costBreakdown.grandTotal) return false;
+  return true;
 }
 
 async function callGroq(prompt, apiKey) {
@@ -33,11 +61,22 @@ async function callGroq(prompt, apiKey) {
       body: JSON.stringify({
         model: "llama-3.3-70b-versatile",
         messages: [{ role: "user", content: prompt }],
+        response_format: { type: "json_object" },
       }),
     }
   );
   const data = await response.json();
   return { ok: response.ok, status: response.status, data };
+}
+
+function extractPlan(apiData) {
+  const raw = apiData?.choices?.[0]?.message?.content;
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
 }
 
 export default async function handler(req, res) {
@@ -74,26 +113,39 @@ STRICT BUDGET RULES:
 - Divide a reasonable share of the budget across ${trip.days} nights for accommodation.
 STYLE AND INTEREST RULES:
 - Generate a DIFFERENT set of activities for EACH day — do not repeat activities across days.
-For each day, include:
-Morning
-Afternoon
-Evening
-(each with 1-2 activities and their estimated cost in €)
-At the very end, add a section titled "Cost Breakdown" with:
-- Accommodation total
-- Food total
-- Activities total
-- Transportation total
-- Grand Total (must be ≤ €${trip.budget} and close to it)
-If the Grand Total is too far below or above €${trip.budget}, revise your choices before answering.
-IMPORTANT: The Grand Total must be the actual sum of Accommodation + Food + Activities + Transportation — do not add any extra unexplained amount to force the total closer to the budget. If the sum is far below the budget, go back and genuinely add more activities, better dining, or nicer accommodation into the daily plan itself (Day 1, Day 2, etc.) so that the itemized costs already reflect the full budget. Never write things like "+ €X (adjustment)" in the Grand Total. The Grand Total must be a single plain number, e.g. "Grand Total: €950".
+- Each day must have 1-2 activities for morning, 1-2 for afternoon, and 1-2 for evening, each with its estimated cost in €.
+COST BREAKDOWN RULES:
+- Provide exactly 4 rows: Accommodation total, Food total, Activities total, Transportation total.
+- Then provide a separate Grand Total (must be ≤ €${trip.budget} and close to it, at least 85% of it).
+- The Grand Total must be the actual sum of the 4 rows — never add an unexplained extra amount.
+- If the sum is far below the budget, add more/better activities, dining, or accommodation into the days themselves so the itemized costs already reflect the full budget.
 LANGUAGE RULES (very important, follow strictly):
-- Write ALL content — activity descriptions, place explanations, and the Cost Breakdown category labels (e.g. the Turkish word for "Accommodation total", "Food total", etc.) — entirely and only in ${languageName}.
-- Do NOT mix in English words, Chinese characters, or any other language inside the ${languageName} text. Every sentence must be pure, natural, grammatically correct ${languageName}.
-- Do NOT invent or use non-${languageName} vocabulary for concepts that have a normal ${languageName} translation.
-- The ONLY exception — the ONLY text allowed to stay in English no matter what — is these exact structural headers: "## Day 1", "## Day 2", etc., "Morning", "Afternoon", "Evening", and "## Cost Breakdown". These five header types must ALWAYS stay in English exactly as shown, since they are used for parsing.
-- Before finalizing your answer, re-read every sentence and make sure it is entirely in ${languageName} except for those exact headers.
-Format clearly with "## Day 1", "## Day 2", etc. as headers (always in English). Return only the itinerary and cost breakdown, no introduction or closing remarks.
+- ALL text VALUES in the JSON (activity descriptions, cost breakdown row labels, everything) must be written entirely and only in ${languageName}.
+- Do NOT mix in English words, Chinese characters, Arabic characters, or any other language inside the ${languageName} text. Every sentence must be pure, natural, grammatically correct ${languageName}.
+- The JSON KEYS themselves (like "morning", "afternoon", "label", "value") must stay exactly as specified in the schema below — do not translate keys, only values.
+- Before finalizing, re-read every text value and make sure it is entirely in ${languageName}.
+OUTPUT FORMAT (very important):
+Respond with ONLY a single valid JSON object, no markdown, no code fences, no explanation, matching EXACTLY this schema:
+{
+  "days": [
+    {
+      "number": 1,
+      "morning": ["activity 1 with cost", "activity 2 with cost"],
+      "afternoon": ["activity 1 with cost"],
+      "evening": ["activity 1 with cost"]
+    }
+  ],
+  "costBreakdown": {
+    "rows": [
+      { "label": "Accommodation total (in ${languageName})", "value": "€240 (...)" },
+      { "label": "Food total (in ${languageName})", "value": "€240 (...)" },
+      { "label": "Activities total (in ${languageName})", "value": "€170 (...)" },
+      { "label": "Transportation total (in ${languageName})", "value": "€110 (...)" }
+    ],
+    "grandTotal": "€760"
+  }
+}
+The "days" array must contain exactly ${trip.days} entries, numbered 1 to ${trip.days}.
 `;
 
   try {
@@ -105,30 +157,32 @@ Format clearly with "## Day 1", "## Day 2", etc. as headers (always in English).
       });
     }
 
-    if (!result.data.choices || !result.data.choices[0]) {
-      return res.status(500).json({ error: "Groq API geçerli bir yanıt döndürmedi" });
-    }
+    let plan = extractPlan(result.data);
+    let planText = plan ? collectStrings(plan).join(" ") : "";
 
-    let content = result.data.choices[0].message.content;
+    const needsRetry =
+      !isValidPlan(plan) || hasUnexpectedCharacters(planText);
 
-    // Dil karışması tespit edilirse (örn. CJK karakterler), bir kez daha dene.
-    if (hasUnexpectedCharacters(content)) {
+    if (needsRetry) {
       const retryResult = await callGroq(prompt, API_KEY);
-      if (
-        retryResult.ok &&
-        retryResult.data.choices &&
-        retryResult.data.choices[0]
-      ) {
-        const retryContent = retryResult.data.choices[0].message.content;
-        // Yeniden deneme temiz geldiyse onu kullan; hâlâ bozuksa elimizdeki
-        // ilk yanıtla devam et (sonsuz döngüye girmemek için).
-        if (!hasUnexpectedCharacters(retryContent)) {
-          content = retryContent;
-        }
+      const retryPlan = extractPlan(retryResult.data);
+      const retryText = retryPlan ? collectStrings(retryPlan).join(" ") : "";
+
+      if (isValidPlan(retryPlan) && !hasUnexpectedCharacters(retryText)) {
+        plan = retryPlan;
+      } else if (isValidPlan(retryPlan) && !isValidPlan(plan)) {
+        // İlk deneme geçersizdi ama en azından yeniden deneme geçerliyse onu kullan.
+        plan = retryPlan;
       }
     }
 
-    return res.status(200).json({ content });
+    if (!isValidPlan(plan)) {
+      return res.status(500).json({
+        error: "AI geçerli bir plan üretemedi, lütfen tekrar deneyin.",
+      });
+    }
+
+    return res.status(200).json({ plan });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
