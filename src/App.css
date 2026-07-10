@@ -841,6 +841,7 @@ color:#dbeafe;
 .hero {
   position: relative;
   overflow: hidden;
+  border-radius: 20px;
 }
 
 .hero-glow {
