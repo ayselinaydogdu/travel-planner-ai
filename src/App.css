@@ -804,9 +804,7 @@ color:#dbeafe;
 
 .cost-breakdown-card {
   margin-top: 30px;
-  background: var(--glass-bg-strong);
-  -webkit-backdrop-filter: blur(18px);
-  backdrop-filter: blur(18px);
+  background: rgba(30, 27, 46, 0.75);
   border: 1px solid var(--glass-border);
   border-radius: 20px;
   padding: 28px;
@@ -1191,9 +1189,7 @@ color:#dbeafe;
 
 .booking-links-card {
   margin-top: 30px;
-  background: var(--glass-bg-strong);
-  -webkit-backdrop-filter: blur(18px);
-  backdrop-filter: blur(18px);
+  background: rgba(30, 27, 46, 0.75);
   border: 1px solid var(--glass-border);
   border-radius: 20px;
   padding: 28px;
