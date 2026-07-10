@@ -3,6 +3,8 @@ const translations = {
     flag: "🇬🇧",
     langName: "English",
     nav: { home: "Home", destinations: "Destinations", planner: "AI Planner", about: "About" },
+    auth: { login: "Log In", logout: "Log Out", myTrips: "My Trips" },
+    
     hero: {
       badge: "✨ Smart Trip Planning",
       subtitle: "Plan Smarter. Travel Better.",
@@ -64,6 +66,7 @@ const translations = {
     flag: "🇹🇷",
     langName: "Türkçe",
     nav: { home: "Anasayfa", destinations: "Rotalar", planner: "AI Planlayıcı", about: "Hakkında" },
+    auth: { login: "Giriş Yap", logout: "Çıkış Yap", myTrips: "Seyahatlerim" },
     hero: {
       badge: "✨ Akıllı Seyahat Planlama",
       subtitle: "Daha Akıllı Planla. Daha İyi Seyahat Et.",
@@ -129,6 +132,7 @@ const translations = {
     flag: "🇪🇸",
     langName: "Español",
     nav: { home: "Inicio", destinations: "Destinos", planner: "Planificador IA", about: "Acerca de" },
+    auth: { login: "Iniciar Sesión", logout: "Cerrar Sesión", myTrips: "Mis Viajes" },
     hero: {
       badge: "✨ Planificación Inteligente de Viajes",
       subtitle: "Planifica Mejor. Viaja Mejor.",
@@ -194,6 +198,7 @@ const translations = {
     flag: "🇫🇷",
     langName: "Français",
     nav: { home: "Accueil", destinations: "Destinations", planner: "Planificateur IA", about: "À propos" },
+    auth: { login: "Se Connecter", logout: "Se Déconnecter", myTrips: "Mes Voyages" },
     hero: {
       badge: "✨ Planification de Voyage Intelligente",
       subtitle: "Planifiez Mieux. Voyagez Mieux.",
@@ -259,6 +264,7 @@ const translations = {
     flag: "🇩🇪",
     langName: "Deutsch",
     nav: { home: "Startseite", destinations: "Reiseziele", planner: "KI-Planer", about: "Über uns" },
+    auth: { login: "Anmelden", logout: "Abmelden", myTrips: "Meine Reisen" },
     hero: {
       badge: "✨ Intelligente Reiseplanung",
       subtitle: "Klüger Planen. Besser Reisen.",

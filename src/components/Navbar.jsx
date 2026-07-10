@@ -30,15 +30,15 @@ function Navbar({ onAuthClick, onMyTripsClick }) {
         {user ? (
           <>
             <button className="auth-btn" onClick={onMyTripsClick}>
-              Seyahatlerim
+              {t.auth.myTrips}
             </button>
             <button className="auth-btn" onClick={signOut}>
-              Çıkış Yap
+              {t.auth.logout}
             </button>
           </>
         ) : (
           <button className="auth-btn" onClick={onAuthClick}>
-            Giriş Yap
+            {t.auth.login}
           </button>
         )}
       </div>
