@@ -30,7 +30,7 @@ function App() {
 
       <Hero />
       <PopularDestinations />
-      <SearchSection />
+      <SearchSection onRequireAuth={() => setShowAuth(true)} />
       <About />
     </div>
   );

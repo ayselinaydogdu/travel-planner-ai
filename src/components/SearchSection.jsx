@@ -6,11 +6,14 @@ import WeatherCard from "./WeatherCard";
 import AIPlanDisplay from "./AIPlanDisplay";
 import { getCoordinates, getWeather } from "../services/weatherService";
 import { generateItinerary } from "../services/groqService";
+import { saveTrip } from "../services/tripsService";
 import { useLanguage } from "../context/LanguageContext";
+import { useAuth } from "../context/AuthContext";
 import { downloadTripPDF } from "../utils/pdfExport";
 
-function SearchSection() {
+function SearchSection({ onRequireAuth }) {
   const { t, language } = useLanguage();
+  const { user } = useAuth();
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [days, setDays] = useState("");
@@ -21,6 +24,8 @@ function SearchSection() {
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(false);
   const [aiPlan, setAiPlan] = useState(null);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   async function generateTrip() {
     if (!from || !to || !days || !budget) {
@@ -29,6 +34,7 @@ function SearchSection() {
     }
     setLoading(true);
     setWeather(null);
+    setSaved(false);
     try {
       const tripData = {
         from,
@@ -39,6 +45,7 @@ function SearchSection() {
         interest: interest.length ? interest : ["General"],
         language,
       };
+
       try {
         const location = await getCoordinates(to);
         if (location) {
@@ -48,6 +55,7 @@ function SearchSection() {
       } catch (weatherError) {
         console.error("Hava durumu alınamadı:", weatherError.message);
       }
+
       const aiResponse = await generateItinerary(tripData);
       setAiPlan(aiResponse);
       setTrip(tripData);
@@ -68,10 +76,27 @@ function SearchSection() {
     });
   }
 
+  async function handleSaveTrip() {
+    if (!user) {
+      onRequireAuth();
+      return;
+    }
+    setSaving(true);
+    try {
+      await saveTrip(user.id, trip, aiPlan);
+      setSaved(true);
+    } catch (error) {
+      console.error("Kaydetme hatası:", error.message);
+      alert("Gezi kaydedilirken bir hata oluştu: " + error.message);
+    }
+    setSaving(false);
+  }
+
   return (
     <section className="search-section" id="planner">
       <h2>{t.form.title}</h2>
       <p>{t.form.subtitle}</p>
+
       <SearchForm
         from={from} setFrom={setFrom}
         to={to} setTo={setTo}
@@ -83,11 +108,13 @@ function SearchSection() {
         generateTrip={generateTrip}
         setTrip={setTrip}
       />
+
       {loading && (
         <div className="loading-box">
           {t.form.loading}
         </div>
       )}
+
       {trip && !loading && (
         <>
           <TripSummary trip={trip} />
@@ -96,9 +123,18 @@ function SearchSection() {
           <div className="ai-result">
             <h2>🤖 AI Personalized Travel Plan</h2>
             <AIPlanDisplay plan={aiPlan} destination={trip.to} />
-            <button className="pdf-download-btn" onClick={handleDownloadPDF}>
-              {t.pdf.download}
-            </button>
+            <div className="trip-actions">
+              <button className="pdf-download-btn" onClick={handleDownloadPDF}>
+                {t.pdf.download}
+              </button>
+              <button
+                className="save-trip-btn"
+                onClick={handleSaveTrip}
+                disabled={saving || saved}
+              >
+                {saved ? "✓ Kaydedildi" : saving ? "Kaydediliyor..." : "💾 Seyahatimi Kaydet"}
+              </button>
+            </div>
           </div>
         </>
       )}

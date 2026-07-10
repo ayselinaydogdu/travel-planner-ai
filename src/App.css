@@ -1365,3 +1365,30 @@ color:#dbeafe;
 .auth-btn:hover {
   background: rgba(255, 255, 255, 0.1);
 }
+
+.trip-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.save-trip-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(90deg, #4f8cff, #6aa9ff);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.save-trip-btn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.save-trip-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
