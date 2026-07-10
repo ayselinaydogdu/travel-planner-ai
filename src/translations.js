@@ -54,6 +54,9 @@ const translations = {
       title: "🏨 Find a Place to Stay",
       subtitle: "Search for accommodation in this destination:",
     },
+    pdf: {
+      download: "📄 Download as PDF",
+    },
   },
 
   tr: {
@@ -110,6 +113,9 @@ const translations = {
     booking: {
       title: "🏨 Konaklama Bul",
       subtitle: "Bu rota için konaklama ara:",
+    },
+    pdf: {
+      download: "📄 PDF Olarak İndir",
     },
   },
 
@@ -168,6 +174,9 @@ const translations = {
       title: "🏨 Encuentra un Alojamiento",
       subtitle: "Busca alojamiento en este destino:",
     },
+    pdf: {
+      download: "📄 Descargar como PDF",
+    },
   },
 
   fr: {
@@ -225,6 +234,9 @@ const translations = {
       title: "🏨 Trouvez un Hébergement",
       subtitle: "Recherchez un hébergement pour cette destination :",
     },
+    pdf: {
+      download: "📄 Télécharger en PDF",
+    },
   },
 
   de: {
@@ -281,6 +293,9 @@ const translations = {
     booking: {
       title: "🏨 Unterkunft Finden",
       subtitle: "Suchen Sie nach Unterkünften für dieses Reiseziel:",
+    },
+    pdf: {
+      download: "📄 Als PDF Herunterladen",
     },
   },
 };

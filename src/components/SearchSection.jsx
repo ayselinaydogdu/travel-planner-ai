@@ -7,6 +7,7 @@ import AIPlanDisplay from "./AIPlanDisplay";
 import { getCoordinates, getWeather } from "../services/weatherService";
 import { generateItinerary } from "../services/groqService";
 import { useLanguage } from "../context/LanguageContext";
+import { downloadTripPDF } from "../utils/pdfExport";
 
 function SearchSection() {
 const { t, language } = useLanguage();
@@ -62,6 +63,10 @@ alert(t.form.somethingWrong + error.message);
 setLoading(false);
   }
 
+function handleDownloadPDF() {
+downloadTripPDF(trip, aiPlan);
+  }
+
 return (
 <section className="search-section" id="planner">
 <h2>{t.form.title}</h2>
@@ -89,6 +94,9 @@ setTrip={setTrip}
 <DestinationCard trip={trip} />
 <div className="ai-result">
 <h2>🤖 AI Personalized Travel Plan</h2>
+<button className="pdf-download-btn" onClick={handleDownloadPDF}>
+{t.pdf.download}
+</button>
 <AIPlanDisplay plan={aiPlan} destination={trip.to} />
 </div>
 </>

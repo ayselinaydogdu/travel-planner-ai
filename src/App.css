@@ -1227,3 +1227,31 @@ color:#dbeafe;
     justify-content: center;
   }
 }
+
+.pdf-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 12px 22px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg,#2563eb,#3b82f6);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.pdf-download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(59,130,246,.35);
+}
+
+@media (max-width: 768px) {
+  .pdf-download-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
