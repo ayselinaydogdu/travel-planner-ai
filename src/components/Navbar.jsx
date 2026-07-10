@@ -2,7 +2,7 @@ import { useLanguage } from "../context/LanguageContext";
 import { useAuth } from "../context/AuthContext";
 import LanguageSwitcher from "./LanguageSwitcher";
 
-function Navbar({ onAuthClick }) {
+function Navbar({ onAuthClick, onMyTripsClick }) {
   const { t } = useLanguage();
   const { user, signOut } = useAuth();
 
@@ -28,9 +28,14 @@ function Navbar({ onAuthClick }) {
       <div className="navbar-right">
         <LanguageSwitcher />
         {user ? (
-          <button className="auth-btn" onClick={signOut}>
-            Çıkış Yap
-          </button>
+          <>
+            <button className="auth-btn" onClick={onMyTripsClick}>
+              Seyahatlerim
+            </button>
+            <button className="auth-btn" onClick={signOut}>
+              Çıkış Yap
+            </button>
+          </>
         ) : (
           <button className="auth-btn" onClick={onAuthClick}>
             Giriş Yap
