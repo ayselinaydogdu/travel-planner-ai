@@ -13,6 +13,33 @@ const LANGUAGE_NAMES = {
   de: "German",
 };
 
+// CJK (Çince/Japonca/Korece) karakter var mı diye kontrol eder.
+// Bu karakterler hiçbir desteklenen dilde (en/tr/es/fr/de) normalde bulunmaz,
+// bu yüzden görülürse dil karışması olduğunu gösterir.
+function hasUnexpectedCharacters(text) {
+  const cjkRegex = /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/;
+  return cjkRegex.test(text);
+}
+
+async function callGroq(prompt, apiKey) {
+  const response = await fetch(
+    "https://api.groq.com/openai/v1/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: "llama-3.3-70b-versatile",
+        messages: [{ role: "user", content: prompt }],
+      }),
+    }
+  );
+  const data = await response.json();
+  return { ok: response.ok, status: response.status, data };
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -70,34 +97,38 @@ Format clearly with "## Day 1", "## Day 2", etc. as headers (always in English).
 `;
 
   try {
-    const response = await fetch(
-      "https://api.groq.com/openai/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: "llama-3.3-70b-versatile",
-          messages: [{ role: "user", content: prompt }],
-        }),
-      }
-    );
+    let result = await callGroq(prompt, API_KEY);
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      return res.status(response.status).json({
-        error: data?.error?.message || "Groq API error",
+    if (!result.ok) {
+      return res.status(result.status).json({
+        error: result.data?.error?.message || "Groq API error",
       });
     }
 
-    if (!data.choices || !data.choices[0]) {
+    if (!result.data.choices || !result.data.choices[0]) {
       return res.status(500).json({ error: "Groq API geçerli bir yanıt döndürmedi" });
     }
 
-    return res.status(200).json({ content: data.choices[0].message.content });
+    let content = result.data.choices[0].message.content;
+
+    // Dil karışması tespit edilirse (örn. CJK karakterler), bir kez daha dene.
+    if (hasUnexpectedCharacters(content)) {
+      const retryResult = await callGroq(prompt, API_KEY);
+      if (
+        retryResult.ok &&
+        retryResult.data.choices &&
+        retryResult.data.choices[0]
+      ) {
+        const retryContent = retryResult.data.choices[0].message.content;
+        // Yeniden deneme temiz geldiyse onu kullan; hâlâ bozuksa elimizdeki
+        // ilk yanıtla devam et (sonsuz döngüye girmemek için).
+        if (!hasUnexpectedCharacters(retryContent)) {
+          content = retryContent;
+        }
+      }
+    }
+
+    return res.status(200).json({ content });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
