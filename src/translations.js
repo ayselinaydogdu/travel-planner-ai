@@ -4,9 +4,9 @@ const translations = {
     langName: "English",
     nav: { home: "Home", destinations: "Destinations", planner: "AI Planner", about: "About" },
     hero: {
-      badge: "✨ Powered by AI",
+      badge: "✨ Smart Trip Planning",
       subtitle: "Plan Smarter. Travel Better.",
-      description: "AI-powered travel itineraries tailored to your destination, budget and travel style.",
+      description: "Personalized travel itineraries, built in seconds, tailored to your destination, budget and travel style.",
       cta: "✈️ Start Planning →",
     },
     destinationsSection: {
@@ -61,9 +61,9 @@ const translations = {
     langName: "Türkçe",
     nav: { home: "Anasayfa", destinations: "Rotalar", planner: "AI Planlayıcı", about: "Hakkında" },
     hero: {
-      badge: "✨ Yapay Zeka Destekli",
+      badge: "✨ Akıllı Seyahat Planlama",
       subtitle: "Daha Akıllı Planla. Daha İyi Seyahat Et.",
-      description: "Hedefinize, bütçenize ve seyahat tarzınıza göre yapay zeka destekli gezi planları.",
+      description: "Hedefinize, bütçenize ve seyahat tarzınıza göre, saniyeler içinde oluşturulan kişiselleştirilmiş gezi planları.",
       cta: "✈️ Planlamaya Başla →",
     },
     destinationsSection: {
@@ -118,9 +118,9 @@ const translations = {
     langName: "Español",
     nav: { home: "Inicio", destinations: "Destinos", planner: "Planificador IA", about: "Acerca de" },
     hero: {
-      badge: "✨ Impulsado por IA",
+      badge: "✨ Planificación Inteligente de Viajes",
       subtitle: "Planifica Mejor. Viaja Mejor.",
-      description: "Itinerarios de viaje impulsados por IA, adaptados a tu destino, presupuesto y estilo de viaje.",
+      description: "Itinerarios de viaje personalizados, creados en segundos, adaptados a tu destino, presupuesto y estilo de viaje.",
       cta: "✈️ Empezar a Planificar →",
     },
     destinationsSection: {
@@ -175,9 +175,9 @@ const translations = {
     langName: "Français",
     nav: { home: "Accueil", destinations: "Destinations", planner: "Planificateur IA", about: "À propos" },
     hero: {
-      badge: "✨ Propulsé par l'IA",
+      badge: "✨ Planification de Voyage Intelligente",
       subtitle: "Planifiez Mieux. Voyagez Mieux.",
-      description: "Itinéraires de voyage propulsés par l'IA, adaptés à votre destination, budget et style de voyage.",
+      description: "Itinéraires de voyage personnalisés, créés en quelques secondes, adaptés à votre destination, budget et style de voyage.",
       cta: "✈️ Commencer à Planifier →",
     },
     destinationsSection: {
@@ -232,9 +232,9 @@ const translations = {
     langName: "Deutsch",
     nav: { home: "Startseite", destinations: "Reiseziele", planner: "KI-Planer", about: "Über uns" },
     hero: {
-      badge: "✨ Unterstützt von KI",
+      badge: "✨ Intelligente Reiseplanung",
       subtitle: "Klüger Planen. Besser Reisen.",
-      description: "KI-gestützte Reisepläne, zugeschnitten auf Ihr Reiseziel, Budget und Reisestil.",
+      description: "Personalisierte Reisepläne, in Sekunden erstellt, zugeschnitten auf Ihr Reiseziel, Budget und Reisestil.",
       cta: "✈️ Planung Starten →",
     },
     destinationsSection: {
