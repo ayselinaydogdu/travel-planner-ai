@@ -4,6 +4,16 @@ const translations = {
     langName: "English",
     nav: { home: "Home", destinations: "Destinations", planner: "AI Planner", about: "About" },
     auth: { login: "Log In", logout: "Log Out", myTrips: "My Trips" },
+
+    trips: {
+    title: "My Trips",
+    empty: "No saved trips yet. Create a plan and save it!",
+    loading: "Loading...",
+    days: "days",
+    budgetLabel: "budget",
+    confirmDelete: "Are you sure you want to delete this trip?",
+    back: "← Back",
+    },
     
     hero: {
       badge: "✨ Smart Trip Planning",
@@ -67,6 +77,19 @@ const translations = {
     langName: "Türkçe",
     nav: { home: "Anasayfa", destinations: "Rotalar", planner: "AI Planlayıcı", about: "Hakkında" },
     auth: { login: "Giriş Yap", logout: "Çıkış Yap", myTrips: "Seyahatlerim" },
+    trips: {
+    title: "Seyahatlerim",
+    empty: "Henüz kayıtlı bir gezin yok. Bir plan oluşturup kaydedebilirsin!",
+    loading: "Yükleniyor...",
+    days: "gün",
+    budgetLabel: "bütçe",
+    confirmDelete: "Bu geziyi silmek istediğine emin misin?",
+    back: "← Geri",
+    },
+
+
+
+
     hero: {
       badge: "✨ Akıllı Seyahat Planlama",
       subtitle: "Daha Akıllı Planla. Daha İyi Seyahat Et.",
@@ -133,6 +156,10 @@ const translations = {
     langName: "Español",
     nav: { home: "Inicio", destinations: "Destinos", planner: "Planificador IA", about: "Acerca de" },
     auth: { login: "Iniciar Sesión", logout: "Cerrar Sesión", myTrips: "Mis Viajes" },
+    trips: { title: "Mis Viajes", empty: "Aún no tienes viajes guardados. ¡Crea un plan y guárdalo!", loading: "Cargando...", days: "días", budgetLabel: "presupuesto", confirmDelete: "¿Seguro que quieres eliminar este viaje?", back: "← Atrás" },
+
+
+
     hero: {
       badge: "✨ Planificación Inteligente de Viajes",
       subtitle: "Planifica Mejor. Viaja Mejor.",
@@ -199,6 +226,10 @@ const translations = {
     langName: "Français",
     nav: { home: "Accueil", destinations: "Destinations", planner: "Planificateur IA", about: "À propos" },
     auth: { login: "Se Connecter", logout: "Se Déconnecter", myTrips: "Mes Voyages" },
+    trips: { title: "Mes Voyages", empty: "Aucun voyage enregistré pour l'instant. Créez un plan et enregistrez-le !", loading: "Chargement...", days: "jours", budgetLabel: "budget", confirmDelete: "Voulez-vous vraiment supprimer ce voyage ?", back: "← Retour" },
+
+
+
     hero: {
       badge: "✨ Planification de Voyage Intelligente",
       subtitle: "Planifiez Mieux. Voyagez Mieux.",
@@ -265,6 +296,11 @@ const translations = {
     langName: "Deutsch",
     nav: { home: "Startseite", destinations: "Reiseziele", planner: "KI-Planer", about: "Über uns" },
     auth: { login: "Anmelden", logout: "Abmelden", myTrips: "Meine Reisen" },
+    trips: { title: "Meine Reisen", empty: "Noch keine gespeicherten Reisen. Erstellen Sie einen Plan und speichern Sie ihn!", loading: "Wird geladen...", days: "Tage", budgetLabel: "Budget", confirmDelete: "Möchten Sie diese Reise wirklich löschen?", back: "← Zurück" },
+
+
+
+
     hero: {
       badge: "✨ Intelligente Reiseplanung",
       subtitle: "Klüger Planen. Besser Reisen.",

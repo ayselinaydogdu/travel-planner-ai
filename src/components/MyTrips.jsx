@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useLanguage } from "../context/LanguageContext";
 import { getTrips, deleteTrip } from "../services/tripsService";
 import AIPlanDisplay from "./AIPlanDisplay";
 
 function MyTrips({ onClose }) {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const [trips, setTrips] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedTrip, setSelectedTrip] = useState(null);
@@ -27,10 +29,10 @@ function MyTrips({ onClose }) {
 
   async function handleDelete(tripId, e) {
     e.stopPropagation();
-    if (!confirm("Bu geziyi silmek istediğine emin misin?")) return;
+    if (!confirm(t.trips.confirmDelete)) return;
     try {
       await deleteTrip(tripId);
-      setTrips(trips.filter((t) => t.id !== tripId));
+      setTrips(trips.filter((tr) => tr.id !== tripId));
       if (selectedTrip?.id === tripId) setSelectedTrip(null);
     } catch (error) {
       console.error("Silinemedi:", error.message);
@@ -42,12 +44,12 @@ function MyTrips({ onClose }) {
       <div className="my-trips-panel">
         <div className="my-trips-header">
           <button className="back-btn" onClick={() => setSelectedTrip(null)}>
-            ← Geri
+            {t.trips.back}
           </button>
           <button className="close-btn" onClick={onClose}>✕</button>
         </div>
         <h2>{selectedTrip.from_city} → {selectedTrip.to_city}</h2>
-        <p>{selectedTrip.days} gün · {selectedTrip.budget} bütçe</p>
+        <p>{selectedTrip.days} {t.trips.days} · {selectedTrip.budget} {t.trips.budgetLabel}</p>
         <AIPlanDisplay plan={selectedTrip.plan} destination={selectedTrip.to_city} />
       </div>
     );
@@ -56,15 +58,13 @@ function MyTrips({ onClose }) {
   return (
     <div className="my-trips-panel">
       <div className="my-trips-header">
-        <h2>Seyahatlerim</h2>
+        <h2>{t.trips.title}</h2>
         <button className="close-btn" onClick={onClose}>✕</button>
       </div>
 
-      {loading && <p>Yükleniyor...</p>}
+      {loading && <p>{t.trips.loading}</p>}
 
-      {!loading && trips.length === 0 && (
-        <p>Henüz kayıtlı bir gezin yok. Bir plan oluşturup kaydedebilirsin!</p>
-      )}
+      {!loading && trips.length === 0 && <p>{t.trips.empty}</p>}
 
       <ul className="trips-list">
         {trips.map((trip) => (
@@ -75,9 +75,9 @@ function MyTrips({ onClose }) {
           >
             <div>
               <strong>{trip.from_city} → {trip.to_city}</strong>
-              <p>{trip.days} gün · {trip.budget} bütçe</p>
+              <p>{trip.days} {t.trips.days} · {trip.budget} {t.trips.budgetLabel}</p>
               <span className="trip-date">
-                {new Date(trip.created_at).toLocaleDateString("tr-TR")}
+                {new Date(trip.created_at).toLocaleDateString()}
               </span>
             </div>
             <button

@@ -1466,3 +1466,28 @@ color:#dbeafe;
 .delete-trip-btn:hover {
   opacity: 1;
 }
+
+html {
+  color-scheme: dark;
+}
+
+.input-group input,
+select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: rgba(255,255,255,.06);
+  color: white;
+  -webkit-text-fill-color: white; /* Safari color'ı yok sayıp bunu kullanabiliyor */
+}
+
+.input-group input::placeholder {
+  color: #94a3b8;
+  -webkit-text-fill-color: #94a3b8;
+  opacity: 1;
+}
+
+/* iOS otomatik zoom'u tetiklemesin diye */
+.input-group input,
+select {
+  font-size: 16px;
+}
