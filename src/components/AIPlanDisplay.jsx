@@ -89,7 +89,7 @@ function BookingLinks({ destination }) {
       <p className="booking-links-subtitle">{t.booking.subtitle}</p>
       <div className="booking-links-grid">
         {links.map((link) => (
-          
+          <a
             key={link.name}
             href={link.url}
             target="_blank"
