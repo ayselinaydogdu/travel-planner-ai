@@ -60,7 +60,12 @@ At the very end, add a section titled "Cost Breakdown" with:
 - Grand Total (must be ≤ €${trip.budget} and close to it)
 If the Grand Total is too far below or above €${trip.budget}, revise your choices before answering.
 IMPORTANT: The Grand Total must be the actual sum of Accommodation + Food + Activities + Transportation — do not add any extra unexplained amount to force the total closer to the budget. If the sum is far below the budget, go back and genuinely add more activities, better dining, or nicer accommodation into the daily plan itself (Day 1, Day 2, etc.) so that the itemized costs already reflect the full budget. Never write things like "+ €X (adjustment)" in the Grand Total. The Grand Total must be a single plain number, e.g. "Grand Total: €950".
-LANGUAGE: Write all activity descriptions and content in ${languageName}. HOWEVER, keep the structural headers exactly in English and exactly in this format, do not translate them: "## Day 1", "## Day 2", etc., "Morning", "Afternoon", "Evening", and "## Cost Breakdown". These structural headers must ALWAYS stay in English regardless of the chosen language, since they are used for parsing. Only the activity descriptions, accommodation/food/activity labels inside the Cost Breakdown, and all other text should be in ${languageName}.
+LANGUAGE RULES (very important, follow strictly):
+- Write ALL content — activity descriptions, place explanations, and the Cost Breakdown category labels (e.g. the Turkish word for "Accommodation total", "Food total", etc.) — entirely and only in ${languageName}.
+- Do NOT mix in English words, Chinese characters, or any other language inside the ${languageName} text. Every sentence must be pure, natural, grammatically correct ${languageName}.
+- Do NOT invent or use non-${languageName} vocabulary for concepts that have a normal ${languageName} translation.
+- The ONLY exception — the ONLY text allowed to stay in English no matter what — is these exact structural headers: "## Day 1", "## Day 2", etc., "Morning", "Afternoon", "Evening", and "## Cost Breakdown". These five header types must ALWAYS stay in English exactly as shown, since they are used for parsing.
+- Before finalizing your answer, re-read every sentence and make sure it is entirely in ${languageName} except for those exact headers.
 Format clearly with "## Day 1", "## Day 2", etc. as headers (always in English). Return only the itinerary and cost breakdown, no introduction or closing remarks.
 `;
 
