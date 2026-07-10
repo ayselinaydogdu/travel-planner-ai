@@ -94,10 +94,10 @@ setTrip={setTrip}
 <DestinationCard trip={trip} />
 <div className="ai-result">
 <h2>🤖 AI Personalized Travel Plan</h2>
+<AIPlanDisplay plan={aiPlan} destination={trip.to} />
 <button className="pdf-download-btn" onClick={handleDownloadPDF}>
 {t.pdf.download}
 </button>
-<AIPlanDisplay plan={aiPlan} destination={trip.to} />
 </div>
 </>
       )}
