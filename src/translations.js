@@ -50,6 +50,10 @@ const translations = {
       "Local Culture": "Local Culture", Architecture: "Architecture",
       "Wellness & Spa": "Wellness & Spa", "Festivals & Events": "Festivals & Events",
     },
+    booking: {
+      title: "🏨 Find a Place to Stay",
+      subtitle: "Search for accommodation in this destination:",
+    },
   },
 
   tr: {
@@ -102,6 +106,10 @@ const translations = {
       Sports: "Spor", Photography: "Fotoğrafçılık", Beaches: "Plajlar",
       "Local Culture": "Yerel Kültür", Architecture: "Mimari",
       "Wellness & Spa": "Wellness & Spa", "Festivals & Events": "Festivaller ve Etkinlikler",
+    },
+    booking: {
+      title: "🏨 Konaklama Bul",
+      subtitle: "Bu rota için konaklama ara:",
     },
   },
 
@@ -156,6 +164,10 @@ const translations = {
       "Local Culture": "Cultura Local", Architecture: "Arquitectura",
       "Wellness & Spa": "Bienestar y Spa", "Festivals & Events": "Festivales y Eventos",
     },
+    booking: {
+      title: "🏨 Encuentra un Alojamiento",
+      subtitle: "Busca alojamiento en este destino:",
+    },
   },
 
   fr: {
@@ -209,6 +221,10 @@ const translations = {
       "Local Culture": "Culture Locale", Architecture: "Architecture",
       "Wellness & Spa": "Bien-être & Spa", "Festivals & Events": "Festivals et Événements",
     },
+    booking: {
+      title: "🏨 Trouvez un Hébergement",
+      subtitle: "Recherchez un hébergement pour cette destination :",
+    },
   },
 
   de: {
@@ -261,6 +277,10 @@ const translations = {
       Sports: "Sport", Photography: "Fotografie", Beaches: "Strände",
       "Local Culture": "Lokale Kultur", Architecture: "Architektur",
       "Wellness & Spa": "Wellness & Spa", "Festivals & Events": "Festivals & Veranstaltungen",
+    },
+    booking: {
+      title: "🏨 Unterkunft Finden",
+      subtitle: "Suchen Sie nach Unterkünften für dieses Reiseziel:",
     },
   },
 };

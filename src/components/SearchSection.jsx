@@ -89,7 +89,7 @@ setTrip={setTrip}
 <DestinationCard trip={trip} />
 <div className="ai-result">
 <h2>🤖 AI Personalized Travel Plan</h2>
-<AIPlanDisplay plan={aiPlan} />
+<AIPlanDisplay plan={aiPlan} destination={trip.to} />
 </div>
 </>
       )}
