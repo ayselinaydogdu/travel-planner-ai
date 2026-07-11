@@ -1383,7 +1383,7 @@ color:#dbeafe;
   padding: 10px 20px;
   border-radius: 8px;
   border: none;
-  background: linear-gradient(90deg, #4f8cff, #6aa9ff);
+  background: var(--accent-gradient);
   color: #fff;
   font-weight: 600;
   cursor: pointer;
