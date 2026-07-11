@@ -919,6 +919,9 @@ color:#dbeafe;
   position: relative;
   z-index: 1;
   overflow: hidden;
+  width: 100%;
+  max-width: 480px;
+  padding: 22px 32px;
 }
 
 .hero-cta::before {
@@ -1052,6 +1055,11 @@ color:#dbeafe;
 
   .hero-subtitle {
     font-size: 18px;
+  }
+
+  .hero-cta {
+    max-width: 100%;
+    padding: 16px 24px;
   }
 
 
