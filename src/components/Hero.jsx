@@ -12,7 +12,6 @@ target.scrollIntoView({ behavior: "smooth" });
 return (
 <section className="hero" id="home">
 <div className="hero-glow"></div>
-<div className="hero-badge">{t.hero.badge}</div>
 <h1 className="hero-title">
 <span className="hero-emoji">🌍</span> YourNextTrip
 </h1>
