@@ -3,7 +3,16 @@ const translations = {
     flag: "🇬🇧",
     langName: "English",
     nav: { home: "Home", destinations: "Destinations", planner: "AI Planner", about: "About" },
-    auth: { login: "Log In", logout: "Log Out", myTrips: "My Trips" },
+    auth: {
+      login: "Log In", logout: "Log Out", myTrips: "My Trips",
+      signInTitle: "Log In",
+      signUpTitle: "Sign Up",
+      email: "Email",
+      password: "Password",
+      loading: "Loading...",
+      noAccount: "Don't have an account?",
+      hasAccount: "Already have an account?",
+    },
 
     trips: {
     title: "My Trips",
@@ -76,7 +85,16 @@ const translations = {
     flag: "🇹🇷",
     langName: "Türkçe",
     nav: { home: "Anasayfa", destinations: "Rotalar", planner: "AI Planlayıcı", about: "Hakkında" },
-    auth: { login: "Giriş Yap", logout: "Çıkış Yap", myTrips: "Seyahatlerim" },
+    auth: {
+      login: "Giriş Yap", logout: "Çıkış Yap", myTrips: "Seyahatlerim",
+      signInTitle: "Giriş Yap",
+      signUpTitle: "Kayıt Ol",
+      email: "E-posta",
+      password: "Şifre",
+      loading: "Yükleniyor...",
+      noAccount: "Hesabın yok mu?",
+      hasAccount: "Zaten hesabın var mı?",
+    },
     trips: {
     title: "Seyahatlerim",
     empty: "Henüz kayıtlı bir gezin yok. Bir plan oluşturup kaydedebilirsin!",
@@ -155,7 +173,16 @@ const translations = {
     flag: "🇪🇸",
     langName: "Español",
     nav: { home: "Inicio", destinations: "Destinos", planner: "Planificador IA", about: "Acerca de" },
-    auth: { login: "Iniciar Sesión", logout: "Cerrar Sesión", myTrips: "Mis Viajes" },
+    auth: {
+      login: "Iniciar Sesión", logout: "Cerrar Sesión", myTrips: "Mis Viajes",
+      signInTitle: "Iniciar Sesión",
+      signUpTitle: "Registrarse",
+      email: "Correo electrónico",
+      password: "Contraseña",
+      loading: "Cargando...",
+      noAccount: "¿No tienes una cuenta?",
+      hasAccount: "¿Ya tienes una cuenta?",
+    },
     trips: { title: "Mis Viajes", empty: "Aún no tienes viajes guardados. ¡Crea un plan y guárdalo!", loading: "Cargando...", days: "días", budgetLabel: "presupuesto", confirmDelete: "¿Seguro que quieres eliminar este viaje?", back: "← Atrás" },
 
 
@@ -225,7 +252,16 @@ const translations = {
     flag: "🇫🇷",
     langName: "Français",
     nav: { home: "Accueil", destinations: "Destinations", planner: "Planificateur IA", about: "À propos" },
-    auth: { login: "Se Connecter", logout: "Se Déconnecter", myTrips: "Mes Voyages" },
+    auth: {
+      login: "Se Connecter", logout: "Se Déconnecter", myTrips: "Mes Voyages",
+      signInTitle: "Se Connecter",
+      signUpTitle: "S'inscrire",
+      email: "E-mail",
+      password: "Mot de passe",
+      loading: "Chargement...",
+      noAccount: "Vous n'avez pas de compte ?",
+      hasAccount: "Vous avez déjà un compte ?",
+    },
     trips: { title: "Mes Voyages", empty: "Aucun voyage enregistré pour l'instant. Créez un plan et enregistrez-le !", loading: "Chargement...", days: "jours", budgetLabel: "budget", confirmDelete: "Voulez-vous vraiment supprimer ce voyage ?", back: "← Retour" },
 
 
@@ -295,7 +331,16 @@ const translations = {
     flag: "🇩🇪",
     langName: "Deutsch",
     nav: { home: "Startseite", destinations: "Reiseziele", planner: "KI-Planer", about: "Über uns" },
-    auth: { login: "Anmelden", logout: "Abmelden", myTrips: "Meine Reisen" },
+    auth: {
+      login: "Anmelden", logout: "Abmelden", myTrips: "Meine Reisen",
+      signInTitle: "Anmelden",
+      signUpTitle: "Registrieren",
+      email: "E-Mail",
+      password: "Passwort",
+      loading: "Wird geladen...",
+      noAccount: "Noch kein Konto?",
+      hasAccount: "Bereits ein Konto?",
+    },
     trips: { title: "Meine Reisen", empty: "Noch keine gespeicherten Reisen. Erstellen Sie einen Plan und speichern Sie ihn!", loading: "Wird geladen...", days: "Tage", budgetLabel: "Budget", confirmDelete: "Möchten Sie diese Reise wirklich löschen?", back: "← Zurück" },
 
 

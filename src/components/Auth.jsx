@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function Auth({ onSuccess }) {
   const { signIn, signUp } = useAuth();
+  const { t } = useLanguage();
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,19 +30,19 @@ export default function Auth({ onSuccess }) {
 
   return (
     <div className="auth-container">
-      <h2>{isSignUp ? "Kayıt Ol" : "Giriş Yap"}</h2>
+      <h2>{isSignUp ? t.auth.signUpTitle : t.auth.signInTitle}</h2>
 
       <form onSubmit={handleSubmit}>
         <input
           type="email"
-          placeholder="E-posta"
+          placeholder={t.auth.email}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
         <input
           type="password"
-          placeholder="Şifre"
+          placeholder={t.auth.password}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -50,14 +52,14 @@ export default function Auth({ onSuccess }) {
         {error && <p style={{ color: "red" }}>{error}</p>}
 
         <button type="submit" disabled={loading}>
-          {loading ? "Yükleniyor..." : isSignUp ? "Kayıt Ol" : "Giriş Yap"}
+          {loading ? t.auth.loading : isSignUp ? t.auth.signUpTitle : t.auth.signInTitle}
         </button>
       </form>
 
       <p>
-        {isSignUp ? "Zaten hesabın var mı?" : "Hesabın yok mu?"}{" "}
+        {isSignUp ? t.auth.hasAccount : t.auth.noAccount}{" "}
         <button type="button" onClick={() => setIsSignUp(!isSignUp)}>
-          {isSignUp ? "Giriş Yap" : "Kayıt Ol"}
+          {isSignUp ? t.auth.signInTitle : t.auth.signUpTitle}
         </button>
       </p>
     </div>
