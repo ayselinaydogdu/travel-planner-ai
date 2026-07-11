@@ -1129,7 +1129,7 @@ color:#dbeafe;
   color: #d1d5db;
   font-size: 14px;
   cursor: pointer;
-  transition: .2s;
+  transition: border-color .2s, color .2s, transform .15s;
 }
 
 .chip:hover {
