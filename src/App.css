@@ -419,9 +419,7 @@ button:hover{
 
 .day-card{
 
-    background:var(--glass-bg);
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
+    background: rgba(30, 27, 46, 0.75);
 
     border:1px solid var(--glass-border);
 
