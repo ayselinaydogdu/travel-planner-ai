@@ -846,7 +846,7 @@ color:#dbeafe;
 .hero {
   position: relative;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 32px;
 }
 
 .hero-glow {
@@ -857,7 +857,7 @@ color:#dbeafe;
   width: 700px;
   height: 700px;
   background: radial-gradient(circle, rgba(255,107,107,.28) 0%, rgba(255,164,91,.12) 45%, rgba(255,164,91,0) 70%);
-  filter: blur(40px);
+  filter: blur(70px);
   pointer-events: none;
   z-index: 0;
 }
@@ -1032,6 +1032,7 @@ color:#dbeafe;
 
 @media (max-width: 768px) {
   .navbar {
+    position: static;
     padding: 14px 16px;
   }
 
@@ -1045,7 +1046,7 @@ color:#dbeafe;
   }
 
   .hero {
-    margin-top: 200px;
+    margin-top: 40px;
   }
 
   .hero-title {
@@ -1062,6 +1063,10 @@ color:#dbeafe;
     padding: 16px 24px;
   }
 
+  button {
+    padding: 16px 36px;
+    font-size: 17px;
+  }
 
   p {
     font-size: 16px;
