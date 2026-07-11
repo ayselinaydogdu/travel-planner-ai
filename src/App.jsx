@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -14,6 +14,11 @@ function App() {
   const [showAuth, setShowAuth] = useState(false);
   const [showMyTrips, setShowMyTrips] = useState(false);
 
+  useEffect(() => {
+    // iOS Safari'nin touch sonrası repaint gecikmesini düzeltir
+    document.addEventListener("touchstart", function () {}, false);
+  }, []);
+
   if (loading) {
     return <div>Yükleniyor...</div>;
   }
@@ -24,7 +29,6 @@ function App() {
         onAuthClick={() => setShowAuth(true)}
         onMyTripsClick={() => setShowMyTrips(true)}
       />
-
       {showAuth && (
         <div className="auth-modal-overlay" onClick={() => setShowAuth(false)}>
           <div className="auth-modal" onClick={(e) => e.stopPropagation()}>
@@ -32,7 +36,6 @@ function App() {
           </div>
         </div>
       )}
-
       {showMyTrips && (
         <div className="auth-modal-overlay" onClick={() => setShowMyTrips(false)}>
           <div className="my-trips-modal" onClick={(e) => e.stopPropagation()}>
@@ -40,7 +43,6 @@ function App() {
           </div>
         </div>
       )}
-
       <Hero />
       <PopularDestinations />
       <SearchSection onRequireAuth={() => setShowAuth(true)} />
