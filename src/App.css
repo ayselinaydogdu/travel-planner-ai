@@ -58,17 +58,19 @@ button{
 
     margin-top:30px;
 
-    padding:16px 32px;
+    padding:20px 56px;
 
     border:none;
 
-    border-radius:12px;
+    border-radius:999px;
 
     background:var(--accent-gradient);
 
     color:white;
 
-    font-size:18px;
+    font-size:20px;
+
+    font-weight:600;
 
     cursor:pointer;
 
@@ -1053,6 +1055,12 @@ color:#dbeafe;
   .hero-subtitle {
     font-size: 18px;
   }
+
+  button {
+    padding: 16px 36px;
+    font-size: 17px;
+  }
+
 
   p {
     font-size: 16px;
