@@ -113,7 +113,10 @@ STRICT BUDGET RULES:
 - Divide a reasonable share of the budget across ${trip.days} nights for accommodation.
 STYLE AND INTEREST RULES:
 - Generate a DIFFERENT set of activities for EACH day — do not repeat activities across days.
-- Each day must have 1-2 activities for morning, 1-2 for afternoon, and 1-2 for evening, each with its estimated cost in €.
+- Each day must have 3-4 rich activities/recommendations for morning, 3-4 for afternoon, and 2-3 for evening, each with its estimated cost in € (use 0€ for free activities like walking around a neighborhood or viewing a landmark from outside).
+- Make each activity description vivid and specific: instead of just naming a place, add a short, evocative detail (e.g. why it's worth visiting, what makes it special, a sensory detail, or a local tip) in 1 concise sentence.
+- Include variety across categories every day: at least one landmark/sight, one food/drink experience, one local/cultural experience (market, neighborhood walk, viewpoint, hidden gem), and where relevant one activity tied to the traveler's interests.
+- Avoid generic phrasing like "Visit X for €Y" repeated mechanically — vary sentence structure and tone across activities so the itinerary feels lively, not like a checklist.
 COST BREAKDOWN RULES:
 - Provide exactly 4 rows: Accommodation total, Food total, Activities total, Transportation total.
 - Then provide a separate Grand Total (must be ≤ €${trip.budget} and close to it, at least 85% of it).
