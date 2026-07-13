@@ -1,23 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SearchForm from "./SearchForm";
 import TripSummary from "./TripSummary";
 import DestinationCard from "./DestinationCard";
 import WeatherCard from "./WeatherCard";
 import AIPlanDisplay from "./AIPlanDisplay";
 import { getCoordinates, getWeather } from "../services/weatherService";
-import { generateItinerary } from "../services/groqService";
+import { generateItinerary, translateItinerary } from "../services/groqService";
 import { saveTrip } from "../services/tripsService";
 import { useLanguage } from "../context/LanguageContext";
 import { useAuth } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 import { downloadTripPDF } from "../utils/pdfExport";
 
 function SearchSection({ onRequireAuth }) {
   const { t, language } = useLanguage();
   const { user } = useAuth();
+  const toast = useToast();
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [days, setDays] = useState("");
   const [budget, setBudget] = useState("");
+  const [currency, setCurrency] = useState("EUR");
   const [travelStyle, setTravelStyle] = useState(["General"]);
   const [interest, setInterest] = useState(["General"]);
   const [trip, setTrip] = useState(null);
@@ -26,10 +29,37 @@ function SearchSection({ onRequireAuth }) {
   const [aiPlan, setAiPlan] = useState(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [translating, setTranslating] = useState(false);
+
+  // Dil değişince, gösterilen plan farklı bir dildeyse mevcut planı (rotayı koruyarak) çevirir.
+  useEffect(() => {
+    if (!aiPlan || !trip || trip.language === language) return;
+    let cancelled = false;
+    (async () => {
+      setTranslating(true);
+      try {
+        const translated = await translateItinerary(aiPlan, language);
+        if (!cancelled) {
+          setAiPlan(translated);
+          setTrip((prev) => (prev ? { ...prev, language } : prev));
+          setSaved(false);
+        }
+      } catch (error) {
+        console.error("Çeviri hatası:", error.message);
+        if (!cancelled) toast.error(t.form.translateError);
+      } finally {
+        if (!cancelled) setTranslating(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [language]);
 
   async function generateTrip() {
     if (!from || !to || !days || !budget) {
-      alert(t.form.fillFields);
+      toast.warning(t.form.fillFields);
       return;
     }
     setLoading(true);
@@ -41,6 +71,7 @@ function SearchSection({ onRequireAuth }) {
         to,
         days,
         budget,
+        currency,
         travelStyle: travelStyle.length ? travelStyle : ["General"],
         interest: interest.length ? interest : ["General"],
         language,
@@ -61,7 +92,7 @@ function SearchSection({ onRequireAuth }) {
       setTrip(tripData);
     } catch (error) {
       console.error("HATA:", error.message);
-      alert(t.form.somethingWrong + error.message);
+      toast.error(t.form.somethingWrong + error.message);
     }
     setLoading(false);
   }
@@ -85,9 +116,10 @@ function SearchSection({ onRequireAuth }) {
     try {
       await saveTrip(user.id, trip, aiPlan);
       setSaved(true);
+      toast.success(t.save.success);
     } catch (error) {
       console.error("Kaydetme hatası:", error.message);
-      alert("Gezi kaydedilirken bir hata oluştu: " + error.message);
+      toast.error(t.save.error + error.message);
     }
     setSaving(false);
   }
@@ -102,6 +134,7 @@ function SearchSection({ onRequireAuth }) {
         to={to} setTo={setTo}
         days={days} setDays={setDays}
         budget={budget} setBudget={setBudget}
+        currency={currency} setCurrency={setCurrency}
         travelStyle={travelStyle} setTravelStyle={setTravelStyle}
         interest={interest} setInterest={setInterest}
         loading={loading}
@@ -121,18 +154,27 @@ function SearchSection({ onRequireAuth }) {
           {weather && <WeatherCard weather={weather} />}
           <DestinationCard trip={trip} />
           <div className="ai-result">
-            <h2>🤖 AI Personalized Travel Plan</h2>
-            <AIPlanDisplay plan={aiPlan} destination={trip.to} />
+            <h2>{t.save.aiPlanTitle}</h2>
+            {translating && (
+              <div className="loading-box">{t.form.translating}</div>
+            )}
+            <div className={translating ? "plan-translating" : ""}>
+              <AIPlanDisplay plan={aiPlan} destination={trip.to} />
+            </div>
             <div className="trip-actions">
-              <button className="pdf-download-btn" onClick={handleDownloadPDF}>
+              <button
+                className="pdf-download-btn"
+                onClick={handleDownloadPDF}
+                disabled={translating}
+              >
                 {t.pdf.download}
               </button>
               <button
                 className="save-trip-btn"
                 onClick={handleSaveTrip}
-                disabled={saving || saved}
+                disabled={saving || saved || translating}
               >
-                {saved ? "✓ Kaydedildi" : saving ? "Kaydediliyor..." : "💾 Seyahatimi Kaydet"}
+                {saved ? t.save.saved : saving ? t.save.saving : t.save.save}
               </button>
             </div>
           </div>

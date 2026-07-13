@@ -1,9 +1,9 @@
 import { useLanguage } from "../context/LanguageContext";
 
 function highlightCosts(text) {
-  const parts = text.split(/(€\s?[\d.,]+(?:-€?\s?[\d.,]+)?)/g);
+  const parts = text.split(/([€₺$]\s?[\d.,]+(?:-[€₺$]?\s?[\d.,]+)?)/g);
   return parts.map((part, i) =>
-    /€/.test(part) ? (
+    /[€₺$]/.test(part) ? (
       <span className="cost-tag" key={i}>
         {part.trim()}
       </span>

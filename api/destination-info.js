@@ -3,11 +3,21 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { city } = req.body;
+  const { city, language } = req.body;
   const API_KEY = process.env.GROQ_API_KEY;
+
+  const LANGUAGE_NAMES = {
+    en: "English",
+    tr: "Turkish",
+    es: "Spanish",
+    fr: "French",
+    de: "German",
+  };
+  const languageName = LANGUAGE_NAMES[language] || "English";
 
   const prompt = `
 Give me quick travel facts about ${city}.
+Write the text values for "country", "bestSeason" and every item in "highlights" entirely in ${languageName}.
 Return ONLY valid JSON, no extra text, no markdown code fences, in this exact format:
 {"country": "...", "emoji": "one relevant emoji", "bestSeason": "...", "highlights": ["...", "...", "..."]}
 `;

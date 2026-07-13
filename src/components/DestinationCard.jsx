@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { getDestinationInfo } from "../services/groqService";
+import { useLanguage } from "../context/LanguageContext";
 
 function DestinationCard({ trip }) {
+  const { t, language } = useLanguage();
   const [destination, setDestination] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -9,7 +11,7 @@ function DestinationCard({ trip }) {
     async function fetchInfo() {
       setLoading(true);
       try {
-        const info = await getDestinationInfo(trip.to);
+        const info = await getDestinationInfo(trip.to, language);
         setDestination(info);
       } catch (error) {
         console.error("Destination info error:", error);
@@ -27,12 +29,12 @@ function DestinationCard({ trip }) {
       setLoading(false);
     }
     fetchInfo();
-  }, [trip.to]);
+  }, [trip.to, language]);
 
   if (loading || !destination) {
     return (
       <section className="destination-card">
-        <h2>🌍 Loading destination info...</h2>
+        <h2>🌍 {t.destination.loading}</h2>
       </section>
     );
   }
@@ -45,7 +47,7 @@ function DestinationCard({ trip }) {
       <h4>{destination.country}</h4>
       <div className="destination-content">
         <div className="destination-box">
-          <h3>⭐ Highlights</h3>
+          <h3>⭐ {t.destination.highlights}</h3>
           <ul>
             {destination.highlights.map((item, index) => (
               <li key={index}>{item}</li>
@@ -53,7 +55,7 @@ function DestinationCard({ trip }) {
           </ul>
         </div>
         <div className="destination-box">
-          <h3>📅 Best Season</h3>
+          <h3>📅 {t.destination.bestSeason}</h3>
           <p>{destination.bestSeason}</p>
         </div>
       </div>

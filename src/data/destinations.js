@@ -1,47 +1,10 @@
+// Popüler rotalar için sıra + emoji.
+// Çevrilebilir metinler (şehir adı, ülke, öne çıkanlar) translations.js > destinationsInfo içinde.
 const destinations = {
-  paris: {
-    country: "France",
-    emoji: "🗼",
-    bestSeason: "April - June",
-    highlights: [
-      "Eiffel Tower",
-      "Louvre Museum",
-      "French Cuisine",
-    ],
-  },
-
-  rome: {
-    country: "Italy",
-    emoji: "🏛️",
-    bestSeason: "April - May",
-    highlights: [
-      "Colosseum",
-      "Trevi Fountain",
-      "Italian Pizza",
-    ],
-  },
-
-  tokyo: {
-    country: "Japan",
-    emoji: "🗾",
-    bestSeason: "March - April",
-    highlights: [
-      "Shibuya",
-      "Sushi",
-      "Cherry Blossoms",
-    ],
-  },
-
-  istanbul: {
-    country: "Türkiye",
-    emoji: "🕌",
-    bestSeason: "Spring & Autumn",
-    highlights: [
-      "Hagia Sophia",
-      "Bosphorus",
-      "Grand Bazaar",
-    ],
-  },
+  paris: { emoji: "🗼" },
+  rome: { emoji: "🏛️" },
+  tokyo: { emoji: "🗾" },
+  istanbul: { emoji: "🕌" },
 };
 
 export default destinations;

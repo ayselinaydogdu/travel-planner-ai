@@ -58,6 +58,13 @@ export function downloadTripPDF(trip, plan, labels = {}) {
     grandTotal: labels.grandTotal || "Grand Total",
   };
 
+  const CURRENCY_CODES = { EUR: "EUR", TRY: "TRY", USD: "USD" };
+  const curCode = CURRENCY_CODES[trip.currency] || "EUR";
+  // Para sembollerini jsPDF'in desteklediği ASCII kodlara çevirir (€/₺ varsayılan fontta çıkmaz)
+  function money(text) {
+    return text.replace(/€/g, "EUR ").replace(/₺/g, "TRY ");
+  }
+
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
@@ -72,16 +79,6 @@ export function downloadTripPDF(trip, plan, labels = {}) {
     }
   }
 
-  function writeParagraph(text, fontSize, lineHeight) {
-    doc.setFontSize(fontSize);
-    const lines = doc.splitTextToSize(transliterate(text), maxWidth - 6);
-    lines.forEach((line) => {
-      ensureSpace(lineHeight);
-      doc.text(line, margin + 3, y);
-      y += lineHeight;
-    });
-  }
-
   // Başlık
   doc.setTextColor(...COLORS.text);
   doc.setFont(undefined, "bold");
@@ -94,7 +91,7 @@ export function downloadTripPDF(trip, plan, labels = {}) {
   doc.setTextColor(...COLORS.muted);
   doc.text(
     transliterate(
-      `${L.from}: ${trip.from}  |  ${L.days}: ${trip.days}  |  ${L.budget}: EUR ${trip.budget}`
+      `${L.from}: ${trip.from}  |  ${L.days}: ${trip.days}  |  ${L.budget}: ${curCode} ${trip.budget}`
     ),
     margin,
     y
@@ -136,7 +133,7 @@ export function downloadTripPDF(trip, plan, labels = {}) {
       doc.setFont(undefined, "normal");
       doc.setTextColor(...COLORS.text);
       items.forEach((item) => {
-        const bulletText = `-  ${item.replace(/€/g, "EUR ")}`;
+        const bulletText = `-  ${money(item)}`;
         const lines = doc.splitTextToSize(
           transliterate(bulletText),
           maxWidth - 10
@@ -173,7 +170,7 @@ export function downloadTripPDF(trip, plan, labels = {}) {
     doc.setTextColor(...COLORS.text);
     rows.forEach((row) => {
       const label = transliterate(row.label);
-      const value = transliterate(row.value.replace(/€/g, "EUR "));
+      const value = transliterate(money(row.value));
       doc.text(label, margin + 4, y);
       doc.text(value, pageWidth - margin - 4, y, { align: "right" });
       y += 7;
@@ -185,7 +182,7 @@ export function downloadTripPDF(trip, plan, labels = {}) {
       doc.setTextColor(...COLORS.primary);
       doc.text(transliterate(L.grandTotal), margin + 4, y + 1);
       doc.text(
-        transliterate(grandTotal.replace(/€/g, "EUR ")),
+        transliterate(money(grandTotal)),
         pageWidth - margin - 4,
         y + 1,
         { align: "right" }

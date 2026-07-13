@@ -21,6 +21,7 @@ const translations = {
     days: "days",
     budgetLabel: "budget",
     confirmDelete: "Are you sure you want to delete this trip?",
+    deleteError: "Failed to delete the trip. Please try again.",
     back: "← Back",
     },
     
@@ -33,6 +34,12 @@ const translations = {
     destinationsSection: {
       title: "🌍 Popular Destinations",
       subtitle: "Get inspired — here are a few favorites travelers love.",
+    },
+    destinationsInfo: {
+      paris: { name: "Paris", country: "France", highlights: ["Eiffel Tower", "Louvre Museum", "French Cuisine"] },
+      rome: { name: "Rome", country: "Italy", highlights: ["Colosseum", "Trevi Fountain", "Italian Pizza"] },
+      tokyo: { name: "Tokyo", country: "Japan", highlights: ["Shibuya", "Sushi", "Cherry Blossoms"] },
+      istanbul: { name: "Istanbul", country: "Türkiye", highlights: ["Hagia Sophia", "Bosphorus", "Grand Bazaar"] },
     },
     about: {
       title: "🧭 About YourNextTrip",
@@ -50,13 +57,15 @@ const translations = {
       from: "From",
       to: "To",
       days: "Days",
-      budget: "Budget (€)",
+      budget: "Budget",
       travelStyle: "Travel Style",
       interest: "Interest",
       generate: "Generate Trip",
       generating: "Generating...",
       fillFields: "Please fill in all fields!",
       loading: "🤖 AI is creating your perfect itinerary...",
+      translating: "🌐 Translating your plan...",
+      translateError: "The plan could not be translated. Please try again.",
       somethingWrong: "Something went wrong: ",
     },
     styles: {
@@ -77,6 +86,26 @@ const translations = {
     },
     pdf: {
       download: "📄 Download as PDF",
+    },
+    summary: {
+      title: "Your Trip Summary", departure: "Departure", destination: "Destination",
+      duration: "Duration", daysUnit: "Days", budget: "Budget", style: "Style", interest: "Interest",
+    },
+    weather: {
+      title: "Current Weather", temperature: "Temperature", wind: "Wind",
+      humidity: "Humidity", conditions: "Conditions",
+      codes: {
+        clear: "Clear Sky", partlyCloudy: "Partly Cloudy", foggy: "Foggy", drizzle: "Drizzle",
+        rain: "Rain", snow: "Snow", thunderstorm: "Thunderstorm", unknown: "Unknown",
+      },
+    },
+    destination: {
+      loading: "Loading destination info...", highlights: "Highlights", bestSeason: "Best Season",
+    },
+    save: {
+      aiPlanTitle: "🤖 AI Personalized Travel Plan", save: "💾 Save My Trip",
+      saving: "Saving...", saved: "✓ Saved", error: "An error occurred while saving the trip: ",
+      success: "Trip saved successfully!",
     },
     planLabels: { day: "Day", morning: "Morning", afternoon: "Afternoon", evening: "Evening", costBreakdown: "Cost Breakdown", grandTotal: "Grand Total" },
   },
@@ -102,6 +131,7 @@ const translations = {
     days: "gün",
     budgetLabel: "bütçe",
     confirmDelete: "Bu geziyi silmek istediğine emin misin?",
+    deleteError: "Gezi silinemedi. Lütfen tekrar deneyin.",
     back: "← Geri",
     },
 
@@ -117,6 +147,12 @@ const translations = {
     destinationsSection: {
       title: "🌍 Popüler Rotalar",
       subtitle: "İlham alın — gezginlerin favori olduğu birkaç rota.",
+    },
+    destinationsInfo: {
+      paris: { name: "Paris", country: "Fransa", highlights: ["Eyfel Kulesi", "Louvre Müzesi", "Fransız Mutfağı"] },
+      rome: { name: "Roma", country: "İtalya", highlights: ["Kolezyum", "Trevi Çeşmesi", "İtalyan Pizzası"] },
+      tokyo: { name: "Tokyo", country: "Japonya", highlights: ["Shibuya", "Suşi", "Kiraz Çiçekleri"] },
+      istanbul: { name: "İstanbul", country: "Türkiye", highlights: ["Ayasofya", "Boğaz", "Kapalıçarşı"] },
     },
     about: {
       title: "🧭 YourNextTrip Hakkında",
@@ -134,13 +170,15 @@ const translations = {
       from: "Nereden",
       to: "Nereye",
       days: "Gün Sayısı",
-      budget: "Bütçe (€)",
+      budget: "Bütçe",
       travelStyle: "Seyahat Tarzı",
       interest: "İlgi Alanı",
       generate: "Plan Oluştur",
       generating: "Oluşturuluyor...",
       fillFields: "Lütfen tüm alanları doldurun!",
       loading: "🤖 Yapay zeka mükemmel planınızı oluşturuyor...",
+      translating: "🌐 Planınız çevriliyor...",
+      translateError: "Plan çevrilemedi. Lütfen tekrar deneyin.",
       somethingWrong: "Bir şeyler ters gitti: ",
     },
     styles: {
@@ -166,6 +204,26 @@ const translations = {
       days: "Gün",
       budget: "Bütçe",
     },
+    summary: {
+      title: "Gezi Özetin", departure: "Kalkış", destination: "Varış",
+      duration: "Süre", daysUnit: "Gün", budget: "Bütçe", style: "Tarz", interest: "İlgi Alanı",
+    },
+    weather: {
+      title: "Güncel Hava Durumu", temperature: "Sıcaklık", wind: "Rüzgar",
+      humidity: "Nem", conditions: "Durum",
+      codes: {
+        clear: "Açık", partlyCloudy: "Parçalı Bulutlu", foggy: "Sisli", drizzle: "Çisenti",
+        rain: "Yağmurlu", snow: "Karlı", thunderstorm: "Gök Gürültülü Fırtına", unknown: "Bilinmiyor",
+      },
+    },
+    destination: {
+      loading: "Rota bilgisi yükleniyor...", highlights: "Öne Çıkanlar", bestSeason: "En İyi Mevsim",
+    },
+    save: {
+      aiPlanTitle: "🤖 AI Kişisel Seyahat Planı", save: "💾 Seyahatimi Kaydet",
+      saving: "Kaydediliyor...", saved: "✓ Kaydedildi", error: "Gezi kaydedilirken bir hata oluştu: ",
+      success: "Gezi başarıyla kaydedildi!",
+    },
     planLabels: { day: "Gün", morning: "Sabah", afternoon: "Öğleden Sonra", evening: "Akşam", costBreakdown: "Maliyet Dağılımı", grandTotal: "Genel Toplam" },
   },
 
@@ -183,7 +241,7 @@ const translations = {
       noAccount: "¿No tienes una cuenta?",
       hasAccount: "¿Ya tienes una cuenta?",
     },
-    trips: { title: "Mis Viajes", empty: "Aún no tienes viajes guardados. ¡Crea un plan y guárdalo!", loading: "Cargando...", days: "días", budgetLabel: "presupuesto", confirmDelete: "¿Seguro que quieres eliminar este viaje?", back: "← Atrás" },
+    trips: { title: "Mis Viajes", empty: "Aún no tienes viajes guardados. ¡Crea un plan y guárdalo!", loading: "Cargando...", days: "días", budgetLabel: "presupuesto", confirmDelete: "¿Seguro que quieres eliminar este viaje?", deleteError: "No se pudo eliminar el viaje. Inténtalo de nuevo.", back: "← Atrás" },
 
 
 
@@ -196,6 +254,12 @@ const translations = {
     destinationsSection: {
       title: "🌍 Destinos Populares",
       subtitle: "Inspírate — aquí tienes algunos favoritos de los viajeros.",
+    },
+    destinationsInfo: {
+      paris: { name: "París", country: "Francia", highlights: ["Torre Eiffel", "Museo del Louvre", "Cocina Francesa"] },
+      rome: { name: "Roma", country: "Italia", highlights: ["Coliseo", "Fontana de Trevi", "Pizza Italiana"] },
+      tokyo: { name: "Tokio", country: "Japón", highlights: ["Shibuya", "Sushi", "Flores de Cerezo"] },
+      istanbul: { name: "Estambul", country: "Turquía", highlights: ["Santa Sofía", "Bósforo", "Gran Bazar"] },
     },
     about: {
       title: "🧭 Sobre YourNextTrip",
@@ -213,13 +277,15 @@ const translations = {
       from: "Desde",
       to: "Hasta",
       days: "Días",
-      budget: "Presupuesto (€)",
+      budget: "Presupuesto",
       travelStyle: "Estilo de Viaje",
       interest: "Interés",
       generate: "Generar Viaje",
       generating: "Generando...",
       fillFields: "¡Por favor completa todos los campos!",
       loading: "🤖 La IA está creando tu itinerario perfecto...",
+      translating: "🌐 Traduciendo tu plan...",
+      translateError: "No se pudo traducir el plan. Inténtalo de nuevo.",
       somethingWrong: "Algo salió mal: ",
     },
     styles: {
@@ -245,6 +311,26 @@ const translations = {
       days: "Días",
       budget: "Presupuesto",
     },
+    summary: {
+      title: "Resumen de Tu Viaje", departure: "Salida", destination: "Destino",
+      duration: "Duración", daysUnit: "Días", budget: "Presupuesto", style: "Estilo", interest: "Interés",
+    },
+    weather: {
+      title: "Clima Actual", temperature: "Temperatura", wind: "Viento",
+      humidity: "Humedad", conditions: "Condiciones",
+      codes: {
+        clear: "Cielo Despejado", partlyCloudy: "Parcialmente Nublado", foggy: "Niebla", drizzle: "Llovizna",
+        rain: "Lluvia", snow: "Nieve", thunderstorm: "Tormenta", unknown: "Desconocido",
+      },
+    },
+    destination: {
+      loading: "Cargando información del destino...", highlights: "Lo Más Destacado", bestSeason: "Mejor Temporada",
+    },
+    save: {
+      aiPlanTitle: "🤖 Plan de Viaje Personalizado con IA", save: "💾 Guardar Mi Viaje",
+      saving: "Guardando...", saved: "✓ Guardado", error: "Ocurrió un error al guardar el viaje: ",
+      success: "¡Viaje guardado con éxito!",
+    },
     planLabels: { day: "Día", morning: "Mañana", afternoon: "Tarde", evening: "Noche", costBreakdown: "Desglose de Costos", grandTotal: "Total General" },
   },
 
@@ -262,7 +348,7 @@ const translations = {
       noAccount: "Vous n'avez pas de compte ?",
       hasAccount: "Vous avez déjà un compte ?",
     },
-    trips: { title: "Mes Voyages", empty: "Aucun voyage enregistré pour l'instant. Créez un plan et enregistrez-le !", loading: "Chargement...", days: "jours", budgetLabel: "budget", confirmDelete: "Voulez-vous vraiment supprimer ce voyage ?", back: "← Retour" },
+    trips: { title: "Mes Voyages", empty: "Aucun voyage enregistré pour l'instant. Créez un plan et enregistrez-le !", loading: "Chargement...", days: "jours", budgetLabel: "budget", confirmDelete: "Voulez-vous vraiment supprimer ce voyage ?", deleteError: "Échec de la suppression du voyage. Veuillez réessayer.", back: "← Retour" },
 
 
 
@@ -275,6 +361,12 @@ const translations = {
     destinationsSection: {
       title: "🌍 Destinations Populaires",
       subtitle: "Inspirez-vous — voici quelques favoris des voyageurs.",
+    },
+    destinationsInfo: {
+      paris: { name: "Paris", country: "France", highlights: ["Tour Eiffel", "Musée du Louvre", "Cuisine Française"] },
+      rome: { name: "Rome", country: "Italie", highlights: ["Colisée", "Fontaine de Trevi", "Pizza Italienne"] },
+      tokyo: { name: "Tokyo", country: "Japon", highlights: ["Shibuya", "Sushi", "Cerisiers en Fleurs"] },
+      istanbul: { name: "Istanbul", country: "Turquie", highlights: ["Sainte-Sophie", "Bosphore", "Grand Bazar"] },
     },
     about: {
       title: "🧭 À propos de YourNextTrip",
@@ -292,13 +384,15 @@ const translations = {
       from: "De",
       to: "À",
       days: "Jours",
-      budget: "Budget (€)",
+      budget: "Budget",
       travelStyle: "Style de Voyage",
       interest: "Intérêt",
       generate: "Générer le Voyage",
       generating: "Génération...",
       fillFields: "Veuillez remplir tous les champs !",
       loading: "🤖 L'IA crée votre itinéraire parfait...",
+      translating: "🌐 Traduction de votre plan...",
+      translateError: "Le plan n'a pas pu être traduit. Veuillez réessayer.",
       somethingWrong: "Un problème est survenu : ",
     },
     styles: {
@@ -324,6 +418,26 @@ const translations = {
       days: "Jours",
       budget: "Budget",
     },
+    summary: {
+      title: "Résumé de Votre Voyage", departure: "Départ", destination: "Destination",
+      duration: "Durée", daysUnit: "Jours", budget: "Budget", style: "Style", interest: "Intérêt",
+    },
+    weather: {
+      title: "Météo Actuelle", temperature: "Température", wind: "Vent",
+      humidity: "Humidité", conditions: "Conditions",
+      codes: {
+        clear: "Ciel Dégagé", partlyCloudy: "Partiellement Nuageux", foggy: "Brumeux", drizzle: "Bruine",
+        rain: "Pluie", snow: "Neige", thunderstorm: "Orage", unknown: "Inconnu",
+      },
+    },
+    destination: {
+      loading: "Chargement des informations sur la destination...", highlights: "Points Forts", bestSeason: "Meilleure Saison",
+    },
+    save: {
+      aiPlanTitle: "🤖 Plan de Voyage Personnalisé par IA", save: "💾 Enregistrer Mon Voyage",
+      saving: "Enregistrement...", saved: "✓ Enregistré", error: "Une erreur s'est produite lors de l'enregistrement du voyage : ",
+      success: "Voyage enregistré avec succès !",
+    },
     planLabels: { day: "Jour", morning: "Matin", afternoon: "Après-midi", evening: "Soir", costBreakdown: "Répartition des Coûts", grandTotal: "Total Général" },
   },
 
@@ -341,7 +455,7 @@ const translations = {
       noAccount: "Noch kein Konto?",
       hasAccount: "Bereits ein Konto?",
     },
-    trips: { title: "Meine Reisen", empty: "Noch keine gespeicherten Reisen. Erstellen Sie einen Plan und speichern Sie ihn!", loading: "Wird geladen...", days: "Tage", budgetLabel: "Budget", confirmDelete: "Möchten Sie diese Reise wirklich löschen?", back: "← Zurück" },
+    trips: { title: "Meine Reisen", empty: "Noch keine gespeicherten Reisen. Erstellen Sie einen Plan und speichern Sie ihn!", loading: "Wird geladen...", days: "Tage", budgetLabel: "Budget", confirmDelete: "Möchten Sie diese Reise wirklich löschen?", deleteError: "Reise konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.", back: "← Zurück" },
 
 
 
@@ -355,6 +469,12 @@ const translations = {
     destinationsSection: {
       title: "🌍 Beliebte Reiseziele",
       subtitle: "Lassen Sie sich inspirieren — hier sind einige Favoriten der Reisenden.",
+    },
+    destinationsInfo: {
+      paris: { name: "Paris", country: "Frankreich", highlights: ["Eiffelturm", "Louvre-Museum", "Französische Küche"] },
+      rome: { name: "Rom", country: "Italien", highlights: ["Kolosseum", "Trevi-Brunnen", "Italienische Pizza"] },
+      tokyo: { name: "Tokio", country: "Japan", highlights: ["Shibuya", "Sushi", "Kirschblüten"] },
+      istanbul: { name: "Istanbul", country: "Türkei", highlights: ["Hagia Sophia", "Bosporus", "Großer Basar"] },
     },
     about: {
       title: "🧭 Über YourNextTrip",
@@ -372,13 +492,15 @@ const translations = {
       from: "Von",
       to: "Nach",
       days: "Tage",
-      budget: "Budget (€)",
+      budget: "Budget",
       travelStyle: "Reisestil",
       interest: "Interesse",
       generate: "Reise Erstellen",
       generating: "Wird erstellt...",
       fillFields: "Bitte füllen Sie alle Felder aus!",
       loading: "🤖 Die KI erstellt Ihren perfekten Reiseplan...",
+      translating: "🌐 Ihr Plan wird übersetzt...",
+      translateError: "Der Plan konnte nicht übersetzt werden. Bitte versuchen Sie es erneut.",
       somethingWrong: "Etwas ist schiefgelaufen: ",
     },
     styles: {
@@ -403,6 +525,26 @@ const translations = {
       from: "Von",
       days: "Tage",
       budget: "Budget",
+    },
+    summary: {
+      title: "Ihre Reiseübersicht", departure: "Abreise", destination: "Reiseziel",
+      duration: "Dauer", daysUnit: "Tage", budget: "Budget", style: "Stil", interest: "Interesse",
+    },
+    weather: {
+      title: "Aktuelles Wetter", temperature: "Temperatur", wind: "Wind",
+      humidity: "Luftfeuchtigkeit", conditions: "Bedingungen",
+      codes: {
+        clear: "Klarer Himmel", partlyCloudy: "Teilweise Bewölkt", foggy: "Neblig", drizzle: "Nieselregen",
+        rain: "Regen", snow: "Schnee", thunderstorm: "Gewitter", unknown: "Unbekannt",
+      },
+    },
+    destination: {
+      loading: "Reisezielinformationen werden geladen...", highlights: "Höhepunkte", bestSeason: "Beste Reisezeit",
+    },
+    save: {
+      aiPlanTitle: "🤖 KI-Personalisierter Reiseplan", save: "💾 Meine Reise Speichern",
+      saving: "Wird gespeichert...", saved: "✓ Gespeichert", error: "Beim Speichern der Reise ist ein Fehler aufgetreten: ",
+      success: "Reise erfolgreich gespeichert!",
     },
     planLabels: { day: "Tag", morning: "Morgen", afternoon: "Nachmittag", evening: "Abend", costBreakdown: "Kostenaufschlüsselung", grandTotal: "Gesamtsumme" },
   },

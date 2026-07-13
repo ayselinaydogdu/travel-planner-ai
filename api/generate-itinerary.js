@@ -91,6 +91,9 @@ export default async function handler(req, res) {
   const interestText = formatList(trip.interest);
   const languageName = LANGUAGE_NAMES[trip.language] || "English";
 
+  const CURRENCY_SYMBOLS = { EUR: "\u20AC", TRY: "\u20BA", USD: "$" };
+  const cur = CURRENCY_SYMBOLS[trip.currency] || "\u20AC";
+
   const styleInstruction = styleText
     ? `Travel Style(s): ${styleText}. The itinerary must clearly reflect ALL of these styles together in the choice of accommodation, dining, and activities.`
     : `Travel Style: General — no specific style was requested, so create a well-balanced, broadly appealing itinerary suitable for an average traveler.`;
@@ -104,25 +107,25 @@ You are an expert travel planner who is very careful with budgets.
 Create a ${trip.days}-day travel itinerary.
 Destination: ${trip.to}
 Departure City: ${trip.from}
-Total Budget: €${trip.budget} — this is a target budget for the ENTIRE trip (accommodation + food + activities + local transportation, for all ${trip.days} days combined).
+Total Budget: ${cur}${trip.budget} — this is a target budget for the ENTIRE trip (accommodation + food + activities + local transportation, for all ${trip.days} days combined).
 ${styleInstruction}
 ${interestInstruction}
 STRICT BUDGET RULES:
-- The Grand Total should be realistic and land close to €${trip.budget} — use at least 85% of the budget. Do not leave a large unused margin; if there is room, upgrade accommodation quality, add more activities, or include nicer dining instead of leaving money unspent.
-- The Grand Total must NOT exceed €${trip.budget}.
+- The Grand Total should be realistic and land close to ${cur}${trip.budget} — use at least 85% of the budget. Do not leave a large unused margin; if there is room, upgrade accommodation quality, add more activities, or include nicer dining instead of leaving money unspent.
+- The Grand Total must NOT exceed ${cur}${trip.budget}.
 - Divide a reasonable share of the budget across ${trip.days} nights for accommodation.
 STYLE AND INTEREST RULES:
 - Generate a DIFFERENT set of activities for EACH day — do not repeat activities across days.
-- Each day must have 4-5 rich activities/recommendations for morning, 4-5 for afternoon, and 3-4 for evening, each with its estimated cost in € (use 0€ for free activities like walking around a neighborhood or viewing a landmark from outside).
+- Each day must have 4-5 rich activities/recommendations for morning, 4-5 for afternoon, and 3-4 for evening, each with its estimated cost in ${cur} (use 0${cur} for free activities like walking around a neighborhood or viewing a landmark from outside).
 - Think like a local expert planning a real day: group activities that are geographically close together so the day flows naturally (e.g. if you recommend a museum, also suggest a second nearby museum, a nearby café, or a nearby viewpoint within walking distance — mention that it's nearby in the description).
 - Include MULTIPLE distinct food/drink experiences per day (not just one meal) — for example: a local breakfast spot, a mid-morning coffee or street snack, a lunch recommendation, an afternoon treat, and a dinner spot with a specific dish or specialty named. Vary the type of place each time (café, market stall, traditional restaurant, rooftop bar, bakery, etc.) — never repeat the same food venue type twice in the same day.
 - Include MULTIPLE sightseeing options where relevant (e.g. if the destination has several notable museums, galleries, or landmarks, spread them across different days and mention nearby alternatives the traveler could also check out if they have extra time).
 - Make each activity description vivid and specific: instead of just naming a place, add a short, evocative detail (e.g. why it's worth visiting, what makes it special, a sensory detail, opening-hours tip, or a local secret) in 1 concise sentence.
 - Include variety across categories every day: at least two landmarks/sights, two food/drink experiences, one local/cultural experience (market, neighborhood walk, viewpoint, hidden gem), and where relevant one or two activities tied to the traveler's interests.
-- Avoid generic phrasing like "Visit X for €Y" repeated mechanically — vary sentence structure and tone across activities so the itinerary feels lively, detailed, and written by someone who truly knows the destination, not like a checklist.
+- Avoid generic phrasing like "Visit X for ${cur}Y" repeated mechanically — vary sentence structure and tone across activities so the itinerary feels lively, detailed, and written by someone who truly knows the destination, not like a checklist.
 COST BREAKDOWN RULES:
 - Provide exactly 4 rows: Accommodation total, Food total, Activities total, Transportation total.
-- Then provide a separate Grand Total (must be ≤ €${trip.budget} and close to it, at least 85% of it).
+- Then provide a separate Grand Total (must be ≤ ${cur}${trip.budget} and close to it, at least 85% of it).
 - The Grand Total must be the actual sum of the 4 rows — never add an unexplained extra amount.
 - If the sum is far below the budget, add more/better activities, dining, or accommodation into the days themselves so the itemized costs already reflect the full budget.
 LANGUAGE RULES (very important, follow strictly):
@@ -143,12 +146,12 @@ Respond with ONLY a single valid JSON object, no markdown, no code fences, no ex
   ],
   "costBreakdown": {
     "rows": [
-      { "label": "Accommodation total (in ${languageName})", "value": "€240 (...)" },
-      { "label": "Food total (in ${languageName})", "value": "€240 (...)" },
-      { "label": "Activities total (in ${languageName})", "value": "€170 (...)" },
-      { "label": "Transportation total (in ${languageName})", "value": "€110 (...)" }
+      { "label": "Accommodation total (in ${languageName})", "value": "${cur}240 (...)" },
+      { "label": "Food total (in ${languageName})", "value": "${cur}240 (...)" },
+      { "label": "Activities total (in ${languageName})", "value": "${cur}170 (...)" },
+      { "label": "Transportation total (in ${languageName})", "value": "${cur}110 (...)" }
     ],
-    "grandTotal": "€760"
+    "grandTotal": "${cur}760"
   }
 }
 The "days" array must contain exactly ${trip.days} entries, numbered 1 to ${trip.days}.

@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useLanguage } from "../context/LanguageContext";
+import { useToast } from "../context/ToastContext";
 import { getTrips, deleteTrip } from "../services/tripsService";
 import AIPlanDisplay from "./AIPlanDisplay";
 
 function MyTrips({ onClose }) {
   const { user } = useAuth();
   const { t } = useLanguage();
+  const toast = useToast();
   const [trips, setTrips] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedTrip, setSelectedTrip] = useState(null);
@@ -36,6 +38,7 @@ function MyTrips({ onClose }) {
       if (selectedTrip?.id === tripId) setSelectedTrip(null);
     } catch (error) {
       console.error("Silinemedi:", error.message);
+      toast.error(t.trips.deleteError);
     }
   }
 
