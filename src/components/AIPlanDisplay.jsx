@@ -1,9 +1,14 @@
 import { useLanguage } from "../context/LanguageContext";
 
+// Fiyat kalıpları: hem simge-önce (€240, ₺20, $50) hem sayı-önce (240€, 20 ₺, 20 TL) formatları.
+const COST_SPLIT = /((?:€|₺|\$)\s?\d[\d.,]*|\d[\d.,]*\s?(?:€|₺|\$|(?:TL|EUR|USD|TRY)\b))/g;
+// Bir parçanın TAMAMEN bir fiyat olup olmadığını kontrol eder (sadece simge içermesi yetmez).
+const COST_TEST = /^(?:(?:€|₺|\$)\s?\d[\d.,]*|\d[\d.,]*\s?(?:€|₺|\$|TL|EUR|USD|TRY))$/;
+
 function highlightCosts(text) {
-  const parts = text.split(/([€₺$]\s?[\d.,]+(?:-[€₺$]?\s?[\d.,]+)?)/g);
+  const parts = text.split(COST_SPLIT);
   return parts.map((part, i) =>
-    /[€₺$]/.test(part) ? (
+    COST_TEST.test(part.trim()) ? (
       <span className="cost-tag" key={i}>
         {part.trim()}
       </span>
