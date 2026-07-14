@@ -21,6 +21,26 @@ function hasUnexpectedCharacters(text) {
   return leakRegex.test(text);
 }
 
+// Son g\u00FCvenlik a\u011F\u0131: retry de temizleyemezse, plandaki t\u00FCm string de\u011Ferlerden
+// beklenmeyen (CJK/Arap\u00E7a) karakterleri temizler, b\u00F6ylece kullan\u0131c\u0131ya ula\u015Fmaz.
+function stripUnexpectedCharacters(value) {
+  const leakRegex = /[\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF\u0600-\u06FF]/g;
+  if (typeof value === "string") {
+    return value.replace(leakRegex, "").replace(/\s{2,}/g, " ").trim();
+  }
+  if (Array.isArray(value)) {
+    return value.map(stripUnexpectedCharacters);
+  }
+  if (value && typeof value === "object") {
+    const out = {};
+    for (const [k, v] of Object.entries(value)) {
+      out[k] = stripUnexpectedCharacters(v);
+    }
+    return out;
+  }
+  return value;
+}
+
 // JSON'daki tüm string değerleri tek bir metinde birleştirir, böylece dil
 // sızıntısı kontrolünü tüm plan üzerinde tek seferde yapabiliriz.
 function collectStrings(value, acc = []) {
@@ -110,9 +130,9 @@ export default async function handler(req, res) {
 
   const prompt = `
 You are an expert travel planner who is very careful with budgets.
-Create a ${trip.days}-day travel itinerary.
-Destination: ${trip.to}
-Departure City: ${trip.from}
+Create a ${trip.days}-day travel itinerary for the DESTINATION CITY ONLY.
+Destination (plan EVERY single activity here): ${trip.to}
+Departure City: ${trip.from} — the traveler only departs from here. Use this ONLY to estimate the transportation cost of traveling to ${trip.to}. Do NOT plan any activities, sightseeing, dining, or accommodation in ${trip.from}. Day 1 must already begin in ${trip.to}; every day and every activity must take place in ${trip.to}, never in ${trip.from} or any city along the way.
 Total Budget: ${cur}${trip.budget} — this is a target budget for the ENTIRE trip (accommodation + food + activities + local transportation, for all ${trip.days} days combined).
 ${styleInstruction}
 ${interestInstruction}
@@ -197,7 +217,7 @@ The "days" array must contain exactly ${trip.days} entries, numbered 1 to ${trip
       });
     }
 
-    return res.status(200).json({ plan });
+    return res.status(200).json({ plan: stripUnexpectedCharacters(plan) });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

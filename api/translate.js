@@ -16,6 +16,25 @@ function extractPlan(apiData) {
   }
 }
 
+// Çevrilen metinden beklenmeyen (CJK/Arapça) karakterleri son güvenlik ağı olarak temizler.
+function stripUnexpectedCharacters(value) {
+  const leakRegex = /[一-鿿぀-ヿ가-힯؀-ۿ]/g;
+  if (typeof value === "string") {
+    return value.replace(leakRegex, "").replace(/\s{2,}/g, " ").trim();
+  }
+  if (Array.isArray(value)) {
+    return value.map(stripUnexpectedCharacters);
+  }
+  if (value && typeof value === "object") {
+    const out = {};
+    for (const [k, v] of Object.entries(value)) {
+      out[k] = stripUnexpectedCharacters(v);
+    }
+    return out;
+  }
+  return value;
+}
+
 function isValidPlan(plan) {
   if (!plan || !Array.isArray(plan.days) || plan.days.length === 0) return false;
   const hasValidDays = plan.days.every(
@@ -105,7 +124,7 @@ ${JSON.stringify(plan)}
       return res.status(500).json({ error: "Translation failed" });
     }
 
-    return res.status(200).json({ plan: translated });
+    return res.status(200).json({ plan: stripUnexpectedCharacters(translated) });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
