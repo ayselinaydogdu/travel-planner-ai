@@ -105,7 +105,7 @@ function AIPlanDisplay({ plan, destination }) {
                 </h4>
                 <ul>
                   {items.map((item, i) => (
-                    <li key={i}>{highlightCosts(item)}</li>
+                    <li key={i}>{item}</li>
                   ))}
                 </ul>
               </div>
