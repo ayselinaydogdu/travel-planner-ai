@@ -1733,6 +1733,39 @@ select {
   font-size: 16px;
 }
 
+/* Sonuç/plan kartlarını kapsayıcı genişliğe sığdır (mobilde taşmayı önler) */
+.ai-result,
+.preview,
+.weather-card,
+.destination-card {
+  width: 100%;
+  max-width: 900px;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Uzun kelime/fiyatlar satırı taşırmasın */
+.day-card li,
+.destination-box li,
+.cost-label,
+.cost-value {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 768px) {
+  .ai-result {
+    padding: 16px;
+  }
+  .day-card,
+  .cost-breakdown-card,
+  .destination-card,
+  .weather-card,
+  .preview,
+  .booking-links-card {
+    padding: 18px;
+  }
+}
+
 /* Plan çevrilirken hafif soluklaştır */
 .plan-translating {
   opacity: 0.5;
