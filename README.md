@@ -4,6 +4,8 @@ Yapay zekâ destekli seyahat planlayıcı. Kullanıcı nereden nereye gideceğin
 
 Web uygulaması React + Vite ile yazıldı; aynı kod tabanı Capacitor ile iOS ve Android uygulamasına dönüştürülüyor.
 
+Canlı: https://travel-planner-ai-henna.vercel.app
+
 ## Özellikler
 
 - **AI gezi planı** — Kalkış/varış şehri, gün sayısı, bütçe, seyahat tarzı ve ilgi alanlarına göre günlük program üretir
